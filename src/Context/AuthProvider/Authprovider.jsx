@@ -1,43 +1,50 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 
-import { auth } from '../../Firebase/firebase.init';
-import { AuthContext } from '../AuthContext/AuthContext';
-import { useEffect, useState } from 'react';
+import { auth } from "../../Firebase/firebase.init";
+import { AuthContext } from "../AuthContext/AuthContext";
+import { useEffect, useState } from "react";
 
-const Authprovider = ({children}) => {
-    // const [loading, setLoading]= useState(true)
-    const [user, setUser]= useState(null)
+const Authprovider = ({ children }) => {
+  // const [loading, setLoading]= useState(true)
+  const [user, setUser] = useState(null);
 
-    const signUp=(email, password)=>{
-        return createUserWithEmailAndPassword(auth, email, password)
+  const signUp = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
 
-    }
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-    const login= (email, password)=>{
+  const logout = () => {
+    return signOut(auth);
+  };
 
-        return signInWithEmailAndPassword(auth, email, password)
-    }
+  const updateUserProfile = (profileInfo) => {
+    return updateProfile(auth.currentUser, profileInfo)
+  };
 
-    const logout=()=>{
-        return signOut(auth)
-    }
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  }, []);
 
-    useEffect(()=>{
-        const unSubscribe= onAuthStateChanged(auth, currentUser=>{
-            setUser(currentUser)
-            
-        })
-    },[])
+  const authInfo = {
+    signUp,
+    login,
+    user,
+    logout,
+    updateUserProfile
+  };
 
-    const authInfo= {
-        signUp,
-        login,
-        user,
-        logout
-    }
-
-
-    return <AuthContext value={authInfo}>{children}</AuthContext>
+  return <AuthContext value={authInfo}>{children}</AuthContext>;
 };
 
 export default Authprovider;

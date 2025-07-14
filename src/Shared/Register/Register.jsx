@@ -4,8 +4,8 @@ import { useNavigate } from "react-router"; // তুমি বলছো react-r
 import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
-  const {signUp}= useAuth()
-  const navigate= useNavigate()
+  const { signUp, updateUserProfile } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,11 +18,25 @@ const Register = () => {
     // register
     signUp(data.email, data.password)
       .then((result) => {
-        console.log(result)
-        navigate('/')
+        console.log(result);
+
+        const profileInfo = {
+          displayName: data.name,
+          photoURL: data.photo,
+        };
+
+        updateUserProfile(profileInfo)
+          .then(() => {
+            console.log("update profile");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        navigate("/");
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
   };
 

@@ -6,8 +6,9 @@ import { button } from "framer-motion/client";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  console.log(user);
 
-  const handleLogout=()=>{
+  const handleLogout = () => {
     logout()
       .then(() => {
         console.log("User signed out successfully");
@@ -15,7 +16,7 @@ const Navbar = () => {
       .catch((error) => {
         console.error("Sign out error:", error);
       });
-  }
+  };
 
   return (
     <motion.nav
@@ -68,14 +69,25 @@ const Navbar = () => {
             Dashboard
           </NavLink>
 
-          <img
-            src="https://i.ibb.co/5W4fZ0w/default-avatar.jpg"
-            alt="User"
-            className="w-9 h-9 rounded-full border-2 border-lime-400 shadow"
-          />
+          {user ? (
+            <img
+              src={user.photoURL}
+              alt="User"
+              className="w-9 h-9 rounded-full border-2 border-lime-400 shadow"
+            />
+          ) : (
+            <img
+              src="https://i.ibb.co/5W4fZ0w/default-avatar.jpg"
+              alt="User"
+              className="w-9 h-9 rounded-full border-2 border-lime-400 shadow"
+            />
+          )}
 
           {user ? (
-            <button onClick={handleLogout} className="px-4 btn py-1.5 border border-lime-400 text-lime-300 rounded-full hover:bg-lime-400 hover:text-black transition">
+            <button
+              onClick={handleLogout}
+              className="px-4 btn py-1.5 border border-lime-400 text-lime-300 rounded-full hover:bg-lime-400 hover:text-black transition"
+            >
               Logout
             </button>
           ) : (
