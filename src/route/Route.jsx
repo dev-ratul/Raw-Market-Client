@@ -10,6 +10,8 @@ import AddProduct from "../Dashboard/AddProduct/AddProduct";
 import MyProduct from "../Dashboard/MyProduct/MyProduct";
 import UpdateProduct from "../Dashboard/MyProduct/UpdateProduct";
 import AddAdvertisement from "../Dashboard/Advertisement/AddAdvertisement/AddAdvertisement";
+import PrivateRoute from "./PrivateRoute";
+import MyAdvertisement from "../Dashboard/Advertisement/MyAdvertisement";
 
 
 export const router = createBrowserRouter([
@@ -33,7 +35,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout></DashboardLayout>,
+    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children:[
       {
         path: 'add-product',
@@ -50,6 +52,10 @@ export const router = createBrowserRouter([
       {
         path: 'add-advertisement',
         Component: AddAdvertisement
+      },
+      {
+        path: 'my-advertisement',
+        Component: MyAdvertisement
       }
     ]
   }

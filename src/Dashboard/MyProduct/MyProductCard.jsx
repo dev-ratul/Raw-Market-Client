@@ -39,12 +39,12 @@ const MyProductTable = ({ products }) => {
 
   return (
     <div className="overflow-x-auto px-4">
-      <h2 className="text-2xl font-bold mb-4">My Products</h2>
+      <h2 className="text-2xl text-center font-bold mb-4">My Products</h2>
 
       {products.length === 0 ? (
         <p className="text-center text-gray-500">No products found.</p>
       ) : (
-        <table className="table w-full border">
+        <table className="table w-full ">
           <thead>
             <tr className="bg-base-200 text-base font-semibold">
               <th>Item Name</th>

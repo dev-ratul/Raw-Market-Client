@@ -63,6 +63,11 @@ const DashboardLayout = () => {
                 Add Advertisement
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/dashboard/my-advertisement" className={navLinkClass}>
+                My Advertisement
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>
