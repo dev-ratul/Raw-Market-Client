@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router"; // তুমি বলছো react-router use করতে
+import { useNavigate } from "react-router"; 
 import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import useAxios from "../../hooks/useAxios";
 
 const Register = () => {
+  const [profilePicture, setProfilePicture]= useState("")
   const { signUp, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const axiosInstense= useAxios()
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  
   const onSubmit = (data) => {
     console.log("Register Data:", data);
 
     // register
     signUp(data.email, data.password)
-      .then((result) => {
+      .then(async(result) => {
         console.log(result);
+
+
+        const userInfo={
+          email: data.email,
+          role: 'user',
+          create_at: new Date().toISOString(),
+          last_at: new Date().toISOString()
+        }
+
+        const userRes= await axiosInstense.post('users', userInfo)
+        console.log(userRes.data)
+
 
         const profileInfo = {
           displayName: data.name,
-          photoURL: data.photo,
+          photoURL: profilePicture
         };
 
         updateUserProfile(profileInfo)
@@ -38,6 +56,26 @@ const Register = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleUploadImage =async(e) => {
+    const image = e.target.files[0];
+    console.log(image)
+
+
+    const formData= new FormData()
+    formData.append('image', image)
+
+
+    const imageUploadURL= `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`
+
+    const res=await axios.post(imageUploadURL, formData)
+
+    setProfilePicture(res.data.data.display_url)
+  
+
+
+
   };
 
   return (
@@ -59,7 +97,7 @@ const Register = () => {
             <input
               type="text"
               {...register("name", { required: "Name is required" })}
-              className="input input-bordered w-full"
+              className="input bg-black input-bordered w-full"
               placeholder="Your name"
             />
             {errors.name && (
@@ -75,7 +113,7 @@ const Register = () => {
             <input
               type="email"
               {...register("email", { required: "Email is required" })}
-              className="input input-bordered w-full"
+              className="input bg-black input-bordered w-full"
               placeholder="you@example.com"
             />
             {errors.email && (
@@ -91,16 +129,10 @@ const Register = () => {
               Photo URL
             </label>
             <input
-              type="text"
-              {...register("photo", { required: "Photo URL is required" })}
-              className="input input-bordered w-full"
-              placeholder="https://your-photo-link.com"
+              type="file"
+              onChange={handleUploadImage}
+              className="w-full bg-black input-bordered rounded px-3 py-2"
             />
-            {errors.photo && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.photo.message}
-              </p>
-            )}
           </div>
 
           {/* Password */}
@@ -114,7 +146,7 @@ const Register = () => {
                 required: "Password is required",
                 minLength: { value: 6, message: "Minimum 6 characters" },
               })}
-              className="input input-bordered w-full"
+              className="input bg-black input-bordered w-full"
               placeholder="••••••••"
             />
             {errors.password && (
