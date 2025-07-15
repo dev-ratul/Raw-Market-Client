@@ -13,11 +13,17 @@ const DashboardLayout = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <Navbar />
+      <div>
+        <Navbar />
+      </div>
 
       {/* Main Dashboard Layout */}
       <div className="drawer lg:drawer-open flex-1">
-        <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
+        <input
+          id="dashboard-drawer"
+          type="checkbox"
+          className="drawer-toggle"
+        />
 
         {/* Page Content */}
         <div className="drawer-content p-4">
@@ -33,11 +39,15 @@ const DashboardLayout = () => {
         </div>
 
         {/* Sidebar */}
-        <div className="drawer-side">
+        <div className="drawer-side mt-36 lg:mt-0">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-64 min-h-full bg-base-200 space-y-2 text-base-content">
             <h2 className="text-xl font-bold mb-4">Dashboard</h2>
-
+            <li>
+              <NavLink to="/" className={navLinkClass}>
+                Home
+              </NavLink>
+            </li>
             <li>
               <NavLink to="/dashboard/add-product" className={navLinkClass}>
                 Add Product
@@ -49,8 +59,8 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/dashboard/settings" className={navLinkClass}>
-                Settings
+              <NavLink to="/dashboard/add-advertisement" className={navLinkClass}>
+                Add Advertisement
               </NavLink>
             </li>
           </ul>

@@ -8,6 +8,8 @@ import Register from "../Shared/Register/Register";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import AddProduct from "../Dashboard/AddProduct/AddProduct";
 import MyProduct from "../Dashboard/MyProduct/MyProduct";
+import UpdateProduct from "../Dashboard/MyProduct/UpdateProduct";
+import AddAdvertisement from "../Dashboard/Advertisement/AddAdvertisement/AddAdvertisement";
 
 
 export const router = createBrowserRouter([
@@ -40,6 +42,14 @@ export const router = createBrowserRouter([
       {
         path: 'my-product',
         Component: MyProduct
+      },
+      {
+        path: 'update-product/:id',
+        Component: UpdateProduct
+      },
+      {
+        path: 'add-advertisement',
+        Component: AddAdvertisement
       }
     ]
   }

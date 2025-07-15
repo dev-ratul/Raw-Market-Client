@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import useAuth from "../../hooks/useAuth";
 import { useEffect } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AddProduct = () => {
   const { user } = useAuth();
@@ -23,19 +24,30 @@ const AddProduct = () => {
     setValue("status", "pending");
   }, [user, setValue]);
 
-  const onSubmit =async (data) => {
-    const prices = [{ date: data.date, price: Number(data.pricePerUnit) }];
+const onSubmit = async (data) => {
+  const prices = [{ date: data.date, price: Number(data.pricePerUnit) }];
 
-    const finalData = {
-      ...data,
-      prices,
-    };
+  const finalData = {
+    ...data,
+    prices,
+  };
 
-    // upload products
-    const result=await axiosSecure.post('products', finalData)
-    console.log(result)
+  try {
+    const result = await axiosSecure.post('products', finalData);
+    console.log(result);
 
-    console.log("✅ Submitted Product:", finalData);
+    // ✅ Show success alert
+    if (result?.data?.insertedId) {
+      Swal.fire({
+        title: "Success!",
+        text: "Product added successfully!",
+        icon: "success",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#16a34a", // green color
+      });
+    }
+
+    // ✅ Reset form after success
     reset({
       vendorEmail: user?.email || "",
       vendorName: user?.displayName || "",
@@ -48,7 +60,19 @@ const AddProduct = () => {
       marketDescription: "",
       itemDescription: "",
     });
-  };
+
+    console.log("✅ Submitted Product:", finalData);
+  } catch (error) {
+    console.error("❌ Failed to submit product:", error);
+    Swal.fire({
+      title: "Error!",
+      text: "Something went wrong. Please try again.",
+      icon: "error",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#dc2626", // red
+    });
+  }
+};
 
   return (
     <div className="min-h-screen py-12 px-4 bg-base-100">

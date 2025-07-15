@@ -3,6 +3,7 @@ import React from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../../Shared/Loading/Loading";
+import MyProductCard from "./MyProductCard";
 
 const MyProduct = () => {
   const { user } = useAuth();
@@ -11,7 +12,7 @@ const MyProduct = () => {
   const { data: myProduct = [], isPending} = useQuery({
     queryKey: ["/my-product", user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/products?email=${user.email}`);
+      const res = await axiosSecure.get(`/my-product?email=${user.email}`);
       return res.data;
     },
   });
@@ -25,7 +26,7 @@ const MyProduct = () => {
 
   return (
     <div>
-        d
+        <MyProductCard products={myProduct}> </MyProductCard>
     </div>
   )
 };
