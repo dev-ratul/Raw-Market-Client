@@ -49,6 +49,11 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/dashboard/show-price-trend-layout" className={navLinkClass}>
+                Show Price Trend Layout
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/dashboard/add-product" className={navLinkClass}>
                 Add Product
               </NavLink>
@@ -66,6 +71,16 @@ const DashboardLayout = () => {
             <li>
               <NavLink to="/dashboard/my-advertisement" className={navLinkClass}>
                 My Advertisement
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard/all-users" className={navLinkClass}>
+                All Users
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard/all-products" className={navLinkClass}>
+                All Products
               </NavLink>
             </li>
           </ul>

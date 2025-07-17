@@ -12,6 +12,9 @@ import UpdateProduct from "../Dashboard/MyProduct/UpdateProduct";
 import AddAdvertisement from "../Dashboard/Advertisement/AddAdvertisement/AddAdvertisement";
 import PrivateRoute from "./PrivateRoute";
 import MyAdvertisement from "../Dashboard/Advertisement/MyAdvertisement";
+import ShowPriceTrendLayout from "../Dashboard/ShowPriceTrendLayout/ShowPriceTrendLayout/ShowPriceTrendLayout";
+import AllUsers from "../Dashboard/AdminDashboard/AllUsers/AllUsers";
+import AllProducts from "../Dashboard/AdminDashboard/AllProducts/AllProducts";
 
 
 export const router = createBrowserRouter([
@@ -56,6 +59,18 @@ export const router = createBrowserRouter([
       {
         path: 'my-advertisement',
         Component: MyAdvertisement
+      },
+      {
+        path: 'show-price-trend-layout',
+        Component: ShowPriceTrendLayout
+      },
+      {
+        path: 'all-users',
+        Component: AllUsers
+      },
+      {
+        path: 'all-products',
+        Component: AllProducts
       }
     ]
   }

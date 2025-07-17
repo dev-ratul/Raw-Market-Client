@@ -68,7 +68,7 @@ const MyProductTable = ({ products }) => {
                       product.status === "pending"
                         ? "bg-yellow-200 text-yellow-800"
                         : product.status === "approved"
-                        ? "bg-green-200 text-green-800"
+                        ? "bg-green-500 text-white"
                         : "bg-gray-200 text-gray-800"
                     }`}
                   >
