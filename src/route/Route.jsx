@@ -18,6 +18,8 @@ import AllAdvertisements from "../Dashboard/AdminDashboard/AllAdvertisements/All
 import AdminAllProducts from "../Dashboard/AdminDashboard/AllProducts/AdminAllProducts";
 import AllProducts from "../Pages/AllProducts/AllProducts";
 import ViewDetails from "../Pages/AllProducts/ViewDetails";
+import { path } from "framer-motion/client";
+import PotataTrends from "../Dashboard/ShowPriceTrendLayout/PotataTrends/PotataTrends";
 
 
 export const router = createBrowserRouter([
@@ -73,7 +75,13 @@ export const router = createBrowserRouter([
       },
       {
         path: 'show-price-trend-layout',
-        Component: ShowPriceTrendLayout
+        Component: ShowPriceTrendLayout,
+        children:[
+          {
+            path: 'show-price-trend-layout/potata',
+            Component: PotataTrends
+          }
+        ]
       },
       {
         path: 'all-users',
