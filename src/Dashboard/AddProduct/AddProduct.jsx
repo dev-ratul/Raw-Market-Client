@@ -202,7 +202,7 @@ const onSubmit = async (data) => {
             )}
           </div>
 
-          {/* Item Description */}
+          {/* Item Description*/}
           <div className="md:col-span-2">
             <label className="block mb-2 font-semibold">
               Item Description (Optional)
