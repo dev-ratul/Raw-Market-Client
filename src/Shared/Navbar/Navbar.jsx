@@ -47,16 +47,7 @@ const Navbar = () => {
             All Products
           </NavLink>
 
-          <NavLink
-            to="/offers"
-            className={({ isActive }) =>
-              isActive
-                ? "text-lime-400 border-b-2 border-lime-400 pb-1"
-                : "hover:text-lime-400 transition"
-            }
-          >
-            Offers
-          </NavLink>
+         
         </div>
 
         {/* Auth Section */}

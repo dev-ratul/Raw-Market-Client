@@ -14,8 +14,10 @@ import PrivateRoute from "./PrivateRoute";
 import MyAdvertisement from "../Dashboard/Advertisement/MyAdvertisement";
 import ShowPriceTrendLayout from "../Dashboard/ShowPriceTrendLayout/ShowPriceTrendLayout/ShowPriceTrendLayout";
 import AllUsers from "../Dashboard/AdminDashboard/AllUsers/AllUsers";
-import AllProducts from "../Dashboard/AdminDashboard/AllProducts/AllProducts";
 import AllAdvertisements from "../Dashboard/AdminDashboard/AllAdvertisements/AllAdvertisements";
+import AdminAllProducts from "../Dashboard/AdminDashboard/AllProducts/AdminAllProducts";
+import AllProducts from "../Pages/AllProducts/AllProducts";
+import ViewDetails from "../Pages/AllProducts/ViewDetails";
 
 
 export const router = createBrowserRouter([
@@ -34,6 +36,14 @@ export const router = createBrowserRouter([
         {
             path: '/register',
             Component: Register
+        },
+        {
+          path: 'all-products',
+          Component: AllProducts
+        },
+        {
+          path: '/all-products/:id',
+          element: <PrivateRoute><ViewDetails></ViewDetails></PrivateRoute>
         }
     ]
   },
@@ -71,7 +81,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'all-products',
-        Component: AllProducts
+        Component: AdminAllProducts
       },
       {
         path: 'all-advertisements',

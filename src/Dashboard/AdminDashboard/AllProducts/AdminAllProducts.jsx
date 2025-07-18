@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const AllProducts = () => {
+const AdminAllProducts = () => {
   const axiosSecure = useAxiosSecure();
 
   const {
@@ -120,4 +120,4 @@ const AllProducts = () => {
   );
 };
 
-export default AllProducts;
+export default AdminAllProducts;
