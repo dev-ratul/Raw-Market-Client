@@ -13,14 +13,14 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Shared/Loading/Loading";
 import { motion } from "framer-motion";
 
-const PotataTrends = () => {
+const OnionTrends = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: potataTrend = [], isPending } = useQuery({
-    queryKey: ["Product"],
+    queryKey: ["product"],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        "/products/potata?itemName=Potato"
+        "/products/onion"
       );
       return res.data;
     },
@@ -113,4 +113,4 @@ const PotataTrends = () => {
   );
 };
 
-export default PotataTrends;
+export default OnionTrends;

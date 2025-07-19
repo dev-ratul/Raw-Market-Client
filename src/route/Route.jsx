@@ -20,6 +20,9 @@ import AllProducts from "../Pages/AllProducts/AllProducts";
 import ViewDetails from "../Pages/AllProducts/ViewDetails";
 import { path } from "framer-motion/client";
 import PotataTrends from "../Dashboard/ShowPriceTrendLayout/PotataTrends/PotataTrends";
+import OnionTrends from "../Dashboard/ShowPriceTrendLayout/OnionTrends/OnionTrends";
+import OrkaTrends from "../Dashboard/ShowPriceTrendLayout/OkraTrends/OrkaTrends";
+import ManageWatchlist from "../Dashboard/ManageWatchlist/ManageWatchlist";
 
 
 export const router = createBrowserRouter([
@@ -80,7 +83,16 @@ export const router = createBrowserRouter([
           {
             path: 'show-price-trend-layout/potata',
             Component: PotataTrends
-          }
+          },
+          {
+            path: 'show-price-trend-layout/onion',
+            Component: OnionTrends
+          },
+          {
+            path: 'show-price-trend-layout/orka',
+            Component: OrkaTrends
+          },
+          
         ]
       },
       {
@@ -94,6 +106,10 @@ export const router = createBrowserRouter([
       {
         path: 'all-advertisements',
         Component: AllAdvertisements
+      },
+      {
+        path: '/dashboard/manage-watchlist',
+        Component: ManageWatchlist
       }
     ]
   }

@@ -43,27 +43,31 @@ const DashboardLayout = () => {
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-64 min-h-full bg-base-200 space-y-2 text-base-content">
             <h2 className="text-xl font-bold mb-4">Dashboard</h2>
-            <li>
-              <NavLink to="/" className={navLinkClass}>
-                Home
-              </NavLink>
-            </li>
+            
             <li>
               <NavLink
                 to="/dashboard/show-price-trend-layout"
                 className={navLinkClass}
               >
-                View price trends
+               📊 View price trends
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/manage-watchlist"
+                className={navLinkClass}
+              >
+                🛠️ Manage watchlist
               </NavLink>
             </li>
             <li>
               <NavLink to="/dashboard/add-product" className={navLinkClass}>
-                Add Product
+               📝 Add Product
               </NavLink>
             </li>
             <li>
               <NavLink to="/dashboard/my-product" className={navLinkClass}>
-                My Product
+              📄 My Product
               </NavLink>
             </li>
             <li>
@@ -71,7 +75,7 @@ const DashboardLayout = () => {
                 to="/dashboard/add-advertisement"
                 className={navLinkClass}
               >
-                Add Advertisement
+               📢 Add Advertisement
               </NavLink>
             </li>
             <li>
@@ -79,17 +83,17 @@ const DashboardLayout = () => {
                 to="/dashboard/my-advertisement"
                 className={navLinkClass}
               >
-                My Advertisement
+               📊 My Advertisement
               </NavLink>
             </li>
             <li>
               <NavLink to="/dashboard/all-users" className={navLinkClass}>
-                All Users
+               👥 All Users
               </NavLink>
             </li>
             <li>
               <NavLink to="/dashboard/all-products" className={navLinkClass}>
-                All Products
+               📋 All Products
               </NavLink>
             </li>
             <li>
@@ -97,7 +101,7 @@ const DashboardLayout = () => {
                 to="/dashboard/all-advertisements"
                 className={navLinkClass}
               >
-                All Advertisements
+                📢 All Advertisements
               </NavLink>
             </li>
           </ul>

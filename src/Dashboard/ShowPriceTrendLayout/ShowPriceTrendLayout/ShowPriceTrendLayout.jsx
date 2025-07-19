@@ -23,7 +23,7 @@ const DashboardLayout = () => {
             Onion Trends
           </NavLink>
           <NavLink to="show-price-trend-layout/orka" className={navLinkClass}>
-            PotataTrends
+            Orka Trends
           </NavLink>
         </div>
       </div>
