@@ -23,7 +23,7 @@ const ManageWatchlist = () => {
 
   // Remove from watchlist
   const mutation = useMutation({
-    mutationFn: async (productId) => {
+    mutatio1nFn: async (productId) => {
       return await axiosSecure.delete(`/watchlist/remove?email=${user.email}&productId=${productId}`);
     },
     onSuccess: (res) => {

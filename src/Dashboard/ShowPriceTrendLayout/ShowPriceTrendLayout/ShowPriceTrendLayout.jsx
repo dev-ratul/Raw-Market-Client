@@ -14,7 +14,7 @@ const DashboardLayout = () => {
     <div className="min-h-screen flex flex-col">
       {/* Top Navbar */}
       <div className="bg-base-200 p-4 shadow-md">
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-2 bg-white rounded-xl justify-center">
           {/* Static Link */}
           <NavLink to="show-price-trend-layout/potata" className={navLinkClass}>
             Potata Trends

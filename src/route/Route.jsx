@@ -23,6 +23,7 @@ import PotataTrends from "../Dashboard/ShowPriceTrendLayout/PotataTrends/PotataT
 import OnionTrends from "../Dashboard/ShowPriceTrendLayout/OnionTrends/OnionTrends";
 import OrkaTrends from "../Dashboard/ShowPriceTrendLayout/OkraTrends/OrkaTrends";
 import ManageWatchlist from "../Dashboard/ManageWatchlist/ManageWatchlist";
+import Payment from "../Dashboard/Payment/Payment";
 
 
 export const router = createBrowserRouter([
@@ -110,6 +111,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/manage-watchlist',
         Component: ManageWatchlist
+      },
+      {
+        path: 'payment/:id',
+        Component: Payment
       }
     ]
   }

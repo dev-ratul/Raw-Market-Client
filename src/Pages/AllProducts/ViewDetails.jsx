@@ -21,6 +21,7 @@ const ViewDetails = () => {
   const { user, role } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  
 
   const [chartData, setChartData] = useState([]);
   const [rating, setRating] = useState(0);
@@ -62,15 +63,10 @@ const ViewDetails = () => {
     onError: () => toast.error("Already in watchlist"),
   });
 
-  const paymentMutation = useMutation({
-    mutationFn: async () => {
-      const res = await axiosSecure.post("/create-checkout-session", {
-        product,
-      });
-      window.location.href = res.data.url;
-    },
-    onError: () => toast.error("Payment failed"),
-  });
+  const paymentMutation = (product)=>{
+    console.log(product)
+    navigate(`/dashboard/payment/${product._id}`)
+  }
 
   const reviewMutation = useMutation({
     mutationFn: async (newReview) => {
@@ -171,7 +167,7 @@ const ViewDetails = () => {
             </button>
           )}
           <button
-            onClick={() => paymentMutation.mutate()}
+            onClick={() => paymentMutation(product)}
             className="btn bg-green-600 hover:bg-green-700 text-white"
           >
             🛒 Buy Product
