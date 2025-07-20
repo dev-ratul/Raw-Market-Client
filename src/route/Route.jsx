@@ -27,6 +27,8 @@ import Payment from "../Dashboard/Payment/Payment";
 import MyOrderList from "../Dashboard/MyOrderList/MyOrderList";
 import AllOrder from "../Dashboard/AdminDashboard/AllOrder/AllOrder";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
+import Forbidden from "../Componennt/Forbidden/Forbidden";
+import AdminRoute from "./AdminRoute";
 
 
 export const router = createBrowserRouter([
@@ -53,7 +55,11 @@ export const router = createBrowserRouter([
         {
           path: '/all-products/:id',
           element: <PrivateRoute><ViewDetails></ViewDetails></PrivateRoute>
-        }
+        },
+        {
+        path: '/forbidden',
+        Component: Forbidden
+      }
     ]
   },
   {
@@ -101,15 +107,16 @@ export const router = createBrowserRouter([
       },
       {
         path: 'all-users',
-        Component: AllUsers
+        element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
       },
       {
         path: 'all-products',
-        Component: AdminAllProducts
+        element: <AdminRoute><AllAdvertisements></AllAdvertisements></AdminRoute>
       },
       {
         path: 'all-advertisements',
-        Component: AllAdvertisements
+        element: <AdminRoute><AllAdvertisements></AllAdvertisements></AdminRoute>
+        // Component: AllAdvertisements
       },
       {
         path: '/dashboard/manage-watchlist',
@@ -125,7 +132,8 @@ export const router = createBrowserRouter([
       },
       {
         path: 'all-order',
-        Component: AllOrder
+        element: <AdminRoute><AllOrder></AllOrder></AdminRoute>
+        // Component: AllOrder
       }
     ]
   },

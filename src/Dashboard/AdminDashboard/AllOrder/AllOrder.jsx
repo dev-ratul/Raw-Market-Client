@@ -21,7 +21,7 @@ const AllOrder = () => {
   
 
   return (
-    <div className="p-6 min-h-screen bg-black text-white">
+    <div className="p-6 min-h-screen bg-base-200 text-white">
       <h2 className="text-3xl font-bold mb-6 text-center text-white">
         All Orders ({history.length})
       </h2>
