@@ -1,14 +1,15 @@
-import React, {  } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router"; // React Router
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
 
 const Login = () => {
-
-  const {login, user}= useAuth()
-  const navigate= useNavigate()
-  console.log(user)
+  const { login, user, googleLogin } = useAuth();
+  const navigate = useNavigate();
+  const axiosInstanse= useAxios()
+  console.log(user);
   const {
     register,
     handleSubmit,
@@ -17,17 +18,41 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    
 
     // login
     login(data.email, data.password)
-      .then((result)=>{
-        console.log(result)
-        navigate('/')
+      .then((result) => {
+        console.log(result);
+        navigate("/");
       })
-      .catch(error=>{
-        console.log(error)
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then(async (result) => {
+        console.log(result);
+        const email = result.user.email;
+        // console.log(user)
+
+        // // update user info the database
+        const userInfo = {
+          email: email,
+          role: "user",
+          create_at: new Date().toISOString(),
+          last_at: new Date().toISOString(),
+        };
+
+        const userRes = await axiosInstanse.post("/users", userInfo);
+        console.log(userRes);
+
+        navigate("/");
       })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -93,7 +118,10 @@ const Login = () => {
         </div>
 
         {/* Google Login */}
-        <button className="btn w-full rounded-full bg-white text-black border border-gray-300 hover:shadow-md">
+        <button
+          onClick={handleGoogleLogin}
+          className="btn w-full rounded-full bg-white text-black border border-gray-300 hover:shadow-md"
+        >
           <FcGoogle size={20} className="mr-2" />
           Login with Google
         </button>
