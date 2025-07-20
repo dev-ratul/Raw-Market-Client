@@ -16,6 +16,7 @@ const MyOrderList = () => {
       return res.data;
     },
   });
+  console.log(history);
 
   if (isLoading)
     return <div className="text-center py-10 text-white">Loading...</div>;
@@ -53,7 +54,7 @@ const MyOrderList = () => {
                 </td>
                 <td className="px-4 py-3">
                   <Link
-                    to={`/all-products/${history.productId}`}
+                    to={`/all-products/${item.productId}`}
                     className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg shadow-md transition-transform transform hover:scale-105"
                   >
                     🔍 View Details

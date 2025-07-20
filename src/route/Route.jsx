@@ -25,6 +25,8 @@ import OrkaTrends from "../Dashboard/ShowPriceTrendLayout/OkraTrends/OrkaTrends"
 import ManageWatchlist from "../Dashboard/ManageWatchlist/ManageWatchlist";
 import Payment from "../Dashboard/Payment/Payment";
 import MyOrderList from "../Dashboard/MyOrderList/MyOrderList";
+import AllOrder from "../Dashboard/AdminDashboard/AllOrder/AllOrder";
+import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 
 
 export const router = createBrowserRouter([
@@ -120,7 +122,15 @@ export const router = createBrowserRouter([
       {
         path: 'my-order-list',
         Component: MyOrderList
+      },
+      {
+        path: 'all-order',
+        Component: AllOrder
       }
     ]
+  },
+  {
+    path: "*",
+    element: <ErrorPage></ErrorPage>
   }
 ]);

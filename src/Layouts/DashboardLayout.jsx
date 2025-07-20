@@ -112,6 +112,15 @@ const DashboardLayout = () => {
                 📢 All Advertisements
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/dashboard/all-order"
+                className={navLinkClass}
+              >
+                 🛒 All Order
+              </NavLink>
+            </li>
+            
           </ul>
         </div>
       </div>
