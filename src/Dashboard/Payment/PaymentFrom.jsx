@@ -24,7 +24,7 @@ const PaymentFrom = () => {
   });
   const cost = product.pricePerUnit;
   const costInCents = cost * 100;
-  console.log(costInCents);
+  console.log(product);
 
   if (isPending) return <Loading />;
 
@@ -87,6 +87,8 @@ const PaymentFrom = () => {
           amount: parseInt(cost),
           transactionId: result.paymentIntent.id,
           paymentMethod: result.paymentIntent.payment_method_types[0],
+          marketName: product.marketName,
+          productName: product.itemName
         };
 
         const paymentRes = await axiosSecure.post(

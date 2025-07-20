@@ -24,6 +24,7 @@ import OnionTrends from "../Dashboard/ShowPriceTrendLayout/OnionTrends/OnionTren
 import OrkaTrends from "../Dashboard/ShowPriceTrendLayout/OkraTrends/OrkaTrends";
 import ManageWatchlist from "../Dashboard/ManageWatchlist/ManageWatchlist";
 import Payment from "../Dashboard/Payment/Payment";
+import MyOrderList from "../Dashboard/MyOrderList/MyOrderList";
 
 
 export const router = createBrowserRouter([
@@ -115,6 +116,10 @@ export const router = createBrowserRouter([
       {
         path: 'payment/:id',
         Component: Payment
+      },
+      {
+        path: 'my-order-list',
+        Component: MyOrderList
       }
     ]
   }

@@ -61,6 +61,14 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
             <li>
+              <NavLink
+                to="/dashboard/my-order-list"
+                className={navLinkClass}
+              >
+                🛒 My Order List
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/dashboard/add-product" className={navLinkClass}>
                📝 Add Product
               </NavLink>
