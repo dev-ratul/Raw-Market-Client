@@ -111,7 +111,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'all-products',
-        element: <AdminRoute><AllAdvertisements></AllAdvertisements></AdminRoute>
+        element: <AdminRoute><AdminAllProducts></AdminAllProducts></AdminRoute>
       },
       {
         path: 'all-advertisements',

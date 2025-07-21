@@ -6,7 +6,7 @@ const Banner = () => {
     <div className="relative w-full  h-[80vh] md:h-[90vh] overflow-hidden">
       {/* Background Image */}
       <img
-        src="https://i.ibb.co/Q36Gd6XL/9697946.jpg" // ✅ চাইলেই নিজের ইমেজ ইউজ করতে পারিস
+        src="https://i.ibb.co/gMVrXBjC/supermarket-banner-concept-with-ingredients.jpg" // ✅ চাইলেই নিজের ইমেজ ইউজ করতে পারিস
         alt="Fresh Market"
         className="w-full  object-cover"
       />
@@ -20,17 +20,17 @@ const Banner = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center px-1  "
         >
-          <h1 className="text-4xl md:text-6xl font-extrabold text-[#7B4019] mb-4 leading-snug drop-shadow-lg">
-            আপনার নিকটস্থ বাজারের দামে  
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-snug drop-shadow-lg">
+            Prices from your local market,
             <br className="hidden md:block" />
-            থাকুন সর্বদা আপডেটেড
+            always stay updated
           </h1>
-          
+
           <Link
             to="/all-products"
             className="inline-block px-6 py-3 text-lg font-semibold bg-lime-400 text-black rounded-full hover:bg-lime-500 transition duration-300 shadow-md"
           >
-            আজকের দাম দেখুন
+            View Today’s Prices
           </Link>
         </motion.div>
       </div>

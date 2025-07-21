@@ -2,25 +2,30 @@ import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Link, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loading from "../../Shared/Loading/Loading";
 
 const AllProducts = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit } = useForm();
 
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const [sort, setSort] = useState("");
   const [filterDates, setFilterDates] = useState({ from: "", to: "" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
-  // ✅ React Query - fetch filtered/sorted approved products
   const {
-    data: products = [],
+    data,
     isPending,
-    refetch,
   } = useQuery({
-    queryKey: ["all-approved-products", filterDates.from, filterDates.to, sort],
+    queryKey: [
+      "all-approved-products",
+      filterDates.from,
+      filterDates.to,
+      sort,
+      currentPage,
+    ],
     queryFn: async () => {
       const params = new URLSearchParams();
 
@@ -32,28 +37,29 @@ const AllProducts = () => {
         params.append("sort", sort);
       }
 
-      console.log("✅ Sending query:", params.toString()); // এখানে দিবি
+      params.append("page", currentPage);
+      params.append("limit", itemsPerPage);
 
-      const res = await axiosSecure.get(
-        `/products/all-approved?${params.toString()}`
-      );
+      const res = await axiosSecure.get(`/products/all-approved?${params.toString()}`);
       return res.data;
     },
   });
 
-  useEffect(() => {
-    setFilteredProducts(products);
-  }, [products]);
-
-  // ✅ Handle sort dropdown
   const handleSortChange = (e) => {
     setSort(e.target.value);
+    setCurrentPage(1); // Reset page on sort
   };
 
-  // ✅ Handle filter form submit
   const onSubmit = (data) => {
     setFilterDates({ from: data.from, to: data.to });
+    setCurrentPage(1); // Reset page on filter
   };
+
+  const handleViewDetails = (id) => {
+    navigate(`/all-products/${id}`);
+  };
+
+  const totalPages = Math.ceil((data?.total || 0) / itemsPerPage);
 
   return (
     <div className="px-4 py-6 max-w-7xl mx-auto">
@@ -94,18 +100,18 @@ const AllProducts = () => {
         </select>
       </form>
 
-      {/* 🧾 Product Table */}
+      {/* 🧾 Product Grid */}
       {isPending ? (
         <Loading />
       ) : (
-        <div className="max-w-7xl mx-auto p-8  min-h-screen">
+        <div className="max-w-7xl mx-auto p-8 min-h-screen">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((p) => (
+            {data?.products?.length > 0 ? (
+              data.products.map((p) => (
                 <div
                   key={p._id}
-                  className=" bg-opacity-10 backdrop-blur-md rounded-3xl border border-white border-opacity-20 shadow-lg shadow-purple-700/50 
-                      hover:shadow-pink-500/70 hover:scale-105 transition-transform duration-500 cursor-pointer flex flex-col"
+                  className="bg-opacity-10 backdrop-blur-md rounded-3xl border border-white border-opacity-20 shadow-lg shadow-purple-700/50 
+                  hover:shadow-pink-500/70 hover:scale-105 transition-transform duration-500 cursor-pointer flex flex-col"
                   onClick={() => handleViewDetails(p._id)}
                   role="button"
                   tabIndex={0}
@@ -132,10 +138,7 @@ const AllProducts = () => {
 
                     <div className="text-white/80 mb-5 space-y-2 text-lg font-semibold leading-snug">
                       <p>
-                        📅{" "}
-                        <span className="font-normal">
-                          {new Date(p.date).toLocaleDateString()}
-                        </span>
+                        📅 <span className="font-normal">{new Date(p.date).toLocaleDateString()}</span>
                       </p>
                       <p>
                         🏪 <span className="font-normal">{p.marketName}</span>
@@ -148,7 +151,7 @@ const AllProducts = () => {
                     <Link
                       to={`/all-products/${p._id}`}
                       className="flex justify-center items-center bg-gradient-to-r from-pink-600 to-purple-700 hover:from-purple-700 hover:to-pink-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-pink-600/60
-                         transition-colors duration-400 "
+                         transition-colors duration-400"
                       aria-label={`View details of ${p.itemName}`}
                     >
                       View Details
@@ -162,6 +165,23 @@ const AllProducts = () => {
               </p>
             )}
           </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-10 gap-2 flex-wrap">
+              {[...Array(totalPages).keys()].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setCurrentPage(num + 1)}
+                  className={`btn btn-sm ${
+                    currentPage === num + 1 ? "btn-success" : "btn-outline"
+                  }`}
+                >
+                  {num + 1}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

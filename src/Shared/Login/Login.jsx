@@ -8,7 +8,7 @@ import useAxios from "../../hooks/useAxios";
 const Login = () => {
   const { login, user, googleLogin } = useAuth();
   const navigate = useNavigate();
-  const axiosInstanse= useAxios()
+  const axiosInstanse = useAxios();
   console.log(user);
   const {
     register,
@@ -33,20 +33,29 @@ const Login = () => {
   const handleGoogleLogin = () => {
     googleLogin()
       .then(async (result) => {
-        console.log(result);
         const email = result.user.email;
-        // console.log(user)
 
-        // // update user info the database
-        const userInfo = {
-          email: email,
-          role: "user",
-          create_at: new Date().toISOString(),
-          last_at: new Date().toISOString(),
-        };
+        // ইউজার চেক কর
+        const { data: existingUser } = await axiosInstanse.get(
+          `/users/${email}`
+        );
 
-        const userRes = await axiosInstanse.post("/users", userInfo);
-        console.log(userRes);
+        if (!existingUser) {
+          // না থাকলে নতুন করে যোগ করো
+          const userInfo = {
+            email: email,
+            role: "user",
+            create_at: new Date().toISOString(),
+            last_at: new Date().toISOString(),
+          };
+
+          await axiosInstanse.post("/users", userInfo);
+        } else {
+          // থাকলে শুধু last_at আপডেট করো
+          await axiosInstanse.patch(`/users/${email}`, {
+            last_at: new Date().toISOString(),
+          });
+        }
 
         navigate("/");
       })

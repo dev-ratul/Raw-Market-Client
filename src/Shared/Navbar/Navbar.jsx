@@ -1,17 +1,18 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { MdDashboard } from "react-icons/md";
 import { motion } from "framer-motion";
 import useAuth from "../../hooks/useAuth";
-import { button } from "framer-motion/client";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  console.log(user);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout()
       .then(() => {
         console.log("User signed out successfully");
+        navigate("/");
       })
       .catch((error) => {
         console.error("Sign out error:", error);
@@ -23,61 +24,57 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="bg-base-200 text-white shadow-md sticky top-0 z-50"
+      className="sticky top-0 z-50 shadow-xl text-white bg-cover bg-center backdrop-blur-md"
+      
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex flex-col md:flex-row justify-between items-center gap-4">
         {/* Brand */}
         <Link
           to="/"
-          className="text-lime-400 font-extrabold text-2xl flex items-center gap-2"
+          className="text-lime-300 font-extrabold text-3xl flex items-center gap-2 drop-shadow-lg"
         >
           🥬 <span>Raw Market</span>
         </Link>
 
         {/* Nav Links */}
-        <div className="flex gap-6 text-sm md:text-base font-medium">
+        <div className="flex gap-6 text-sm md:text-base font-semibold items-center">
           <NavLink
             to="/all-products"
             className={({ isActive }) =>
               isActive
-                ? "text-lime-400 border-b-2 border-lime-400 pb-1"
-                : "hover:text-lime-400 transition"
+                ? "flex items-center gap-2 text-lime-300 border-b-2 border-lime-300 pb-1"
+                : "flex items-center gap-2 hover:text-lime-300 transition"
             }
           >
+            <FaShoppingCart className="text-lg" />
             All Products
           </NavLink>
-
-         
         </div>
 
         {/* Auth Section */}
         <div className="flex items-center gap-4">
           <NavLink
             to="/dashboard"
-            className="hidden md:flex items-center gap-1 hover:text-lime-400 transition"
+            className="hidden md:flex items-center gap-1 hover:text-lime-300 transition"
           >
             <MdDashboard className="text-xl" />
             Dashboard
           </NavLink>
 
-          {user ? (
-            <img
-              src={user.photoURL}
-              alt="User"
-              className="w-9 h-9 rounded-full border-2 border-lime-400 shadow"
-            />
-          ) : (
-            <img
-              src="https://i.ibb.co/5W4fZ0w/default-avatar.jpg"
-              alt="User"
-              className="w-9 h-9 rounded-full border-2 border-lime-400 shadow"
-            />
-          )}
+          {/* Profile Picture */}
+          <img
+            src={
+              user?.photoURL || "https://i.ibb.co/5W4fZ0w/default-avatar.jpg"
+            }
+            alt="User"
+            className="w-9 h-9 rounded-full border-2 border-lime-300 shadow-md"
+          />
 
+          {/* Auth Buttons */}
           {user ? (
             <button
               onClick={handleLogout}
-              className="px-4 btn py-1.5 border border-lime-400 text-lime-300 rounded-full hover:bg-lime-400 hover:text-black transition"
+              className="px-4 py-1.5 border border-lime-300 text-lime-200 rounded-full hover:bg-lime-400 hover:text-black transition font-medium"
             >
               Logout
             </button>
@@ -85,13 +82,13 @@ const Navbar = () => {
             <>
               <NavLink
                 to="/login"
-                className="px-4 py-1.5 border border-lime-400 text-lime-300 rounded-full hover:bg-lime-400 hover:text-black transition"
+                className="px-4 py-1.5 border border-lime-300 text-lime-200 rounded-full hover:bg-lime-400 hover:text-black transition font-medium"
               >
                 Login
               </NavLink>
               <NavLink
                 to="/register"
-                className="px-4 py-1.5 bg-lime-400 text-black rounded-full hover:bg-lime-500 transition"
+                className="px-4 py-1.5 bg-lime-400 text-black rounded-full hover:bg-lime-500 transition font-medium"
               >
                 Sign Up
               </NavLink>

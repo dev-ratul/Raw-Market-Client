@@ -34,7 +34,7 @@ const Register = () => {
           last_at: new Date().toISOString()
         }
 
-        const userRes= await axiosInstense.post('users', userInfo)
+        const userRes= await axiosInstense.post('/users', userInfo)
         console.log(userRes.data)
 
 

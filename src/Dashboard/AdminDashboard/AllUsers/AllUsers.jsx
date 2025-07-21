@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import Loading from "../../../Shared/Loading/Loading";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -56,7 +57,9 @@ const AllUsers = () => {
     setSearchQuery(searchText); // 🔹 Only update searchQuery on button click
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading){
+    return <Loading></Loading>
+  }
 
   return (
     <div>
