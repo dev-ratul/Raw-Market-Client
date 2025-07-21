@@ -44,13 +44,13 @@ const HomeAdvertisement = () => {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-4 md:px-8 my-16">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 my-16">
       {/* Section Title */}
-      <div className="text-center mb-10">
-        <h2 className="text-4xl font-extrabold text-lime-600">
+      <div className="text-center mb-10 px-2 sm:px-6">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-lime-600">
           Advertisement Highlights
         </h2>
-        <p className="text-gray-600 mt-2 max-w-xl mx-auto">
+        <p className="text-gray-600 mt-2 max-w-xl mx-auto text-sm sm:text-base">
           Explore all current promotions and vendor ads through this interactive carousel.
         </p>
       </div>
@@ -61,19 +61,21 @@ const HomeAdvertisement = () => {
           {approvedAds.map((ad, index) => (
             <div
               key={ad._id || index}
-              className="rounded-lg  overflow-hidden shadow-lg border border-gray-200 bg-white"
+              className="rounded-lg  overflow-hidden shadow-lg border border-gray-200 bg-white mx-2 "
             >
               <img
                 src={ad.image || "https://via.placeholder.com/800x400?text=No+Image"}
                 alt={ad.title}
-                className="w-full object-cover h-[350px]"
+                className="w-full object-cover h-56 sm:h-72 md:h-80 lg:h-[350px]"
               />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              <div className="p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-1 sm:mb-2">
                   {ad.title}
                 </h3>
-                <p className="text-gray-600 mb-3">{ad.description}</p>
-                <p className="text-sm text-gray-400 italic">
+                <p className="text-gray-600 mb-2 sm:mb-3 text-sm sm:text-base">
+                  {ad.description}
+                </p>
+                <p className="text-xs sm:text-sm text-gray-400 italic">
                   Vendor: {ad.vendorName}
                 </p>
               </div>

@@ -66,55 +66,59 @@ const AllAdvertisements = () => {
       <h2 className="text-2xl font-semibold mb-4">All Advertisements</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Title</th>
-              <th>Vendor</th>
-              <th>Status</th>
-              <th>Change Status</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ads.map((ad, index) => (
-              <tr key={ad._id}>
-                <td>{index + 1}</td>
-                <td>{ad.title}</td>
-                <td>{ad.vendorName || "Unknown"}</td>
-                <td>{ad.status}</td>
-                <td className="space-x-1">
-                  <button
-                    className="btn btn-xs btn-success"
-                    onClick={() => handleStatusChange(ad._id, "active")}
-                  >
-                    Active
-                  </button>
-                  <button
-                    className="btn btn-xs btn-warning"
-                    onClick={() => handleStatusChange(ad._id, "pending")}
-                  >
-                    Pending
-                  </button>
-                  <button
-                    className="btn btn-xs btn-error"
-                    onClick={() => handleStatusChange(ad._id, "rejected")}
-                  >
-                    Reject
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-xs btn-danger"
-                    onClick={() => handleDelete(ad._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Vendor</th>
+      <th>Status</th>
+      <th>Change Status</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {ads.map((ad, index) => (
+      <tr key={ad._id}>
+        <td>{index + 1}</td>
+        <td>{ad.title}</td>
+        <td>{ad.vendorName || "Unknown"}</td>
+        <td>{ad.status}</td>
+        <td className="space-x-1">
+          <button
+            className="btn btn-xs btn-success"
+            onClick={() => handleStatusChange(ad._id, "active")}
+            disabled={ad.status === "active"}
+          >
+            Active
+          </button>
+          <button
+            className="btn btn-xs btn-warning"
+            onClick={() => handleStatusChange(ad._id, "pending")}
+            disabled={ad.status === "pending"}
+          >
+            Pending
+          </button>
+          <button
+            className="btn btn-xs btn-error"
+            onClick={() => handleStatusChange(ad._id, "rejected")}
+            disabled={ad.status === "rejected"}
+          >
+            Reject
+          </button>
+        </td>
+        <td>
+          <button
+            className="btn btn-xs btn-danger"
+            onClick={() => handleDelete(ad._id)}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
       </div>
     </div>
   );
