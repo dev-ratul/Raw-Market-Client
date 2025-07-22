@@ -9,7 +9,7 @@ const MyProduct = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const { data: myProduct = [], isPending} = useQuery({
+  const { data: myProduct = [], isPending, refetch} = useQuery({
     queryKey: ["/my-product", user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/my-product?email=${user.email}`);
@@ -26,7 +26,7 @@ const MyProduct = () => {
 
   return (
     <div>
-        <MyProductCard products={myProduct}> </MyProductCard>
+        <MyProductCard products={myProduct} refetch={refetch}> </MyProductCard>
     </div>
   )
 };

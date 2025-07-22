@@ -1,50 +1,53 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link } from "react-router";  // react-router-dom থেকে নিতে হবে
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQueryClient } from "@tanstack/react-query";
 
-const MyProductTable = ({ products }) => {
+const MyProductTable = ({ products, refetch }) => {
   const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
 
- const handleDelete = (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#3085d6",
-    confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      axiosSecure
-        .delete(`/update-product/${id}`)  // এখানে URL মিলবে
-        .then((res) => {
-          if (res.data.deletedCount > 0) {
-            Swal.fire("Deleted!", "Your parcel has been deleted.", "success");
-            // এখানে তোমার UI থেকে ডিলিট হওয়া প্রোডাক্ট রিমুভ বা ডাটা রিফ্রেশ করো
-            // যেমন: setProducts(products.filter(product => product._id !== id))
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axiosSecure.delete(`/delete-product/${id}`);
+          if (res?.data?.deletedCount > 0) {
+            Swal.fire("Deleted!", "Your product has been deleted.", "success");
+
+            // ✅ React Query দিয়ে invalidate করে refetch করো
+            queryClient.invalidateQueries(["my-products"]);
+            
+            // অথবা তুমি refetch() direct call করতেও পারো:
+            // refetch();
           } else {
-            Swal.fire("Error!", "No product deleted.", "error");
+            Swal.fire("Error!", "No product was deleted.", "error");
           }
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Delete error:", error);
-          Swal.fire("Error!", "Failed to delete parcel.", "error");
-        });
-    }
-  });
-};
-
+          Swal.fire("Error!", "Failed to delete the product.", "error");
+        }
+      }
+    });
+  };
 
   return (
     <div className="overflow-x-auto px-4">
       <h2 className="text-2xl text-center font-bold mb-4">My Products</h2>
 
-      {products.length === 0 ? (
+      {(!products || products.length === 0) ? (
         <p className="text-center text-gray-500">No products found.</p>
       ) : (
-        <table className="table w-full ">
+        <table className="table w-full">
           <thead>
             <tr className="bg-base-200 text-base font-semibold">
               <th>Item Name</th>
@@ -82,7 +85,6 @@ const MyProductTable = ({ products }) => {
                   >
                     Update
                   </Link>
-
                   <button
                     className="btn btn-sm btn-error"
                     onClick={() => handleDelete(product._id)}

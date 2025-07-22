@@ -80,7 +80,7 @@ const AllUsers = () => {
       {/* Responsive Table Wrapper */}
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full min-w-[800px] text-sm md:text-base">
-          <thead className="bg-gray-100 text-gray-700">
+          <thead className="bg-purple-100  text-gray-700">
             <tr>
               <th>#</th>
               <th>Name</th>
