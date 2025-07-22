@@ -29,6 +29,7 @@ import AllOrder from "../Dashboard/AdminDashboard/AllOrder/AllOrder";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 import Forbidden from "../Componennt/Forbidden/Forbidden";
 import AdminRoute from "./AdminRoute";
+import TomatoTrends from "../Dashboard/ShowPriceTrendLayout/TomatoTrends/TomatoTrends";
 
 
 export const router = createBrowserRouter([
@@ -91,6 +92,10 @@ export const router = createBrowserRouter([
         Component: ShowPriceTrendLayout,
         children:[
           {
+            index:true,
+            Component: PotataTrends
+          },
+          {
             path: 'show-price-trend-layout/potata',
             Component: PotataTrends
           },
@@ -102,6 +107,10 @@ export const router = createBrowserRouter([
             path: 'show-price-trend-layout/orka',
             Component: OrkaTrends
           },
+          {
+            path: 'show-price-trend-layout/tomato',
+            Component: TomatoTrends
+          }
           
         ]
       },

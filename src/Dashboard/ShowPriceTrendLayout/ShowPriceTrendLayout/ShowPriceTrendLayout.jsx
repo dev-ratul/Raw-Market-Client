@@ -25,6 +25,9 @@ const DashboardLayout = () => {
           <NavLink to="show-price-trend-layout/orka" className={navLinkClass}>
             Orka Trends
           </NavLink>
+          <NavLink to="show-price-trend-layout/tomato" className={navLinkClass}>
+            Tomato Trends
+          </NavLink>
         </div>
       </div>
 

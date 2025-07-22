@@ -4,6 +4,7 @@ import { NavLink, Outlet } from "react-router";
 import Navbar from "../Shared/Navbar/Navbar"; // তোমার Header Component
 import Footer from "../Shared/Footer/Footer"; // তোমার Footer Component
 import useUserRole from "../hooks/useUserRole";
+import { FaBars } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const { role, roleLoading } = useUserRole();
@@ -33,7 +34,7 @@ const DashboardLayout = () => {
           {/* Mobile drawer toggle button */}
           <div className="lg:hidden mb-4">
             <label htmlFor="dashboard-drawer" className="btn btn-neutral">
-              Open Sidebar
+              <FaBars />Dashboard
             </label>
           </div>
 

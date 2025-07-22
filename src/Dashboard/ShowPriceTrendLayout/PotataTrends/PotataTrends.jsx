@@ -19,14 +19,23 @@ const PotataTrends = () => {
   const { data: potataTrend = [], isPending } = useQuery({
     queryKey: ["Product"],
     queryFn: async () => {
+      const res = await axiosSecure.get("/products/potata?itemName=Potato");
+      return res.data;
+    },
+  });
+  // all data
+  const { data: potataTrendAll = [], isLoading } = useQuery({
+    queryKey: ["/products/potata-full"],
+    queryFn: async () => {
       const res = await axiosSecure.get(
-        "/products/potata?itemName=Potato"
+        "/products/potata-full?itemName=Potato"
       );
       return res.data;
     },
   });
 
   if (isPending) return <Loading />;
+  if (isLoading) return <Loading></Loading>;
 
   // Format date
   const formattedData = potataTrend.map((item) => ({
@@ -36,7 +45,6 @@ const PotataTrends = () => {
       day: "numeric",
     }),
   }));
-
   // Trend Calculation
   let trend = 0;
   if (formattedData.length >= 2) {
@@ -52,13 +60,20 @@ const PotataTrends = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="text-2xl font-bold text-blue-800 mb-6 text-center tracking-wide">
-        🥔 Potato Price Trend
-      </h2>
+      <div className="flex justify-around text-2xl font-bold text-blue-800 mb-6 text-center tracking-wide">
+        <p>🥔 Potato Price Trend</p>
+       <div>
+         <p>Item Name: {potataTrendAll.itemName}</p>
+        <p>Market Name: {potataTrendAll.marketName}</p>
+       </div>
+      </div>
 
       <div className="w-full h-[250px] md:h-[350px] lg:h-[500px]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={formattedData} margin={{ top: 10, right: 30, left: 0, bottom: 5 }}>
+          <LineChart
+            data={formattedData}
+            margin={{ top: 10, right: 30, left: 0, bottom: 5 }}
+          >
             <CartesianGrid strokeDasharray="3 3" stroke="#d1d5db" />
             <XAxis
               dataKey="date"

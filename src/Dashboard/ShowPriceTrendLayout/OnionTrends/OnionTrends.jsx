@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 const OnionTrends = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: potataTrend = [], isPending } = useQuery({
+  const { data: onionTrend = [], isPending } = useQuery({
     queryKey: ["product"],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -26,10 +26,23 @@ const OnionTrends = () => {
     },
   });
 
+  // all data
+  const { data: onionTrendAll = [], isLoading } = useQuery({
+    queryKey: ["/products/onion-full"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        "/products/onion-full?itemName=Potato"
+      );
+      return res.data;
+    },
+  });
+
+  if (isLoading) return <Loading></Loading>;
+
   if (isPending) return <Loading />;
 
   // Format date
-  const formattedData = potataTrend.map((item) => ({
+  const formattedData = onionTrend.map((item) => ({
     ...item,
     date: new Date(item.date).toLocaleDateString("en-US", {
       month: "short",
@@ -52,9 +65,13 @@ const OnionTrends = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="text-2xl font-bold text-blue-800 mb-6 text-center tracking-wide">
-        🥔 Potato Price Trend
-      </h2>
+       <div className="flex justify-around text-2xl font-bold text-blue-800 mb-6 text-center tracking-wide">
+        <p>🥔 {onionTrendAll.itemName} Price Trend</p>
+       <div>
+         <p>Item Name: {onionTrendAll.itemName}</p>
+        <p>Market Name: {onionTrendAll.marketName}</p>
+       </div>
+      </div>
 
       <div className="w-full h-[250px] md:h-[350px] lg:h-[500px]">
         <ResponsiveContainer width="100%" height="100%">

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router";
+import { Link } from "react-router"; // ✅ fix route import
 import Swal from "sweetalert2";
 import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -70,29 +70,31 @@ const AdminAllProducts = () => {
   if (isPending) return <div className="text-center py-10">Loading...</div>;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
-      <h2 className="text-4xl font-bold text-center mb-8 text-purple-700">🛠️ Manage All Products</h2>
+    <div className="max-w-7xl mx-auto px-2 sm:px-4 py-10">
+      <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-purple-700">
+        🛠️ Manage All Products
+      </h2>
 
       <div className="overflow-x-auto bg-base-200 rounded-xl shadow-md border border-base-300">
-        <table className="table table-zebra text-sm">
+        <table className="table table-zebra w-full min-w-[800px] text-xs sm:text-sm">
           <thead className="bg-purple-100 text-purple-800 uppercase text-xs font-bold">
             <tr>
-              <th className="py-4 px-3">#</th>
-              <th className="py-4 px-3">Product Name</th>
-              <th className="py-4 px-3">Vendor Email</th>
-              <th className="py-4 px-3">Status</th>
-              <th className="py-4 px-3 text-center">Actions</th>
+              <th className="py-3 px-2">#</th>
+              <th className="py-3 px-2">Product Name</th>
+              <th className="py-3 px-2">Vendor Email</th>
+              <th className="py-3 px-2">Status</th>
+              <th className="py-3 px-2 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {products.map((product, index) => (
               <tr key={product._id} className="hover">
-                <td className="py-3 px-3 font-medium">{(page - 1) * limit + index + 1}</td>
-                <td className="py-3 px-3">{product.itemName}</td>
-                <td className="py-3 px-3">{product.vendorEmail}</td>
-                <td className="py-3 px-3 capitalize">
+                <td className="py-2 px-2 font-medium">{(page - 1) * limit + index + 1}</td>
+                <td className="py-2 px-2">{product.itemName}</td>
+                <td className="py-2 px-2 break-all">{product.vendorEmail}</td>
+                <td className="py-2 px-2 capitalize">
                   <span
-                    className={`badge px-3 py-1 rounded-full ${
+                    className={`badge px-3 py-1 rounded-full text-xs ${
                       product.status === "pending"
                         ? "badge-warning"
                         : product.status === "approved"
@@ -103,33 +105,35 @@ const AdminAllProducts = () => {
                     {product.status}
                   </span>
                 </td>
-                <td className="py-3 px-3 space-x-2 text-center">
-                  <button
-                    onClick={() => handleApprove(product._id)}
-                    className="btn btn-xs btn-success"
-                    disabled={product.status !== "pending"}
-                  >
-                    Approve
-                  </button>
-                  <button
-                    onClick={() => handleReject(product._id)}
-                    className="btn btn-xs btn-error"
-                    disabled={product.status !== "pending"}
-                  >
-                    Reject
-                  </button>
-                  <Link
-                    to={`/dashboard/update-product/${product._id}`}
-                    className="btn btn-xs btn-warning"
-                  >
-                    Update
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(product._id)}
-                    className="btn btn-xs btn-outline btn-error"
-                  >
-                    Delete
-                  </button>
+                <td className="py-2 px-2">
+                  <div className="flex flex-wrap justify-center gap-2 max-w-xs mx-auto">
+                    <button
+                      onClick={() => handleApprove(product._id)}
+                      className="btn btn-xs btn-success"
+                      disabled={product.status !== "pending"}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      onClick={() => handleReject(product._id)}
+                      className="btn btn-xs btn-error"
+                      disabled={product.status !== "pending"}
+                    >
+                      Reject
+                    </button>
+                    <Link
+                      to={`/dashboard/update-product/${product._id}`}
+                      className="btn btn-xs btn-warning"
+                    >
+                      Update
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(product._id)}
+                      className="btn btn-xs btn-outline btn-error"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -138,12 +142,14 @@ const AdminAllProducts = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex flex-wrap justify-center gap-2 mt-8">
         {[...Array(totalPages).keys()].map((p) => (
           <button
             key={p}
             onClick={() => setPage(p + 1)}
-            className={`btn btn-sm ${page === p + 1 ? "btn-primary" : "btn-outline"}`}
+            className={`btn btn-sm ${
+              page === p + 1 ? "btn-primary" : "btn-outline"
+            }`}
           >
             {p + 1}
           </button>

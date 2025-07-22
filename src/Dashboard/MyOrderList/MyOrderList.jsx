@@ -16,7 +16,6 @@ const MyOrderList = () => {
       return res.data;
     },
   });
-  console.log(history);
 
   if (isLoading)
     return <div className="text-center py-10 text-white">Loading...</div>;
@@ -27,19 +26,19 @@ const MyOrderList = () => {
         🧾 My Order List
       </h2>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full table-auto border-collapse shadow-xl rounded-xl overflow-hidden">
-          <thead>
-            <tr className="bg-gray-800 text-white text-sm md:text-base">
-              <th className="px-4 py-3 text-left">#</th>
-              <th className="px-4 py-3 text-left">Product</th>
-              <th className="px-4 py-3 text-left">Market</th>
-              <th className="px-4 py-3 text-left">Price</th>
-              <th className="px-4 py-3 text-left">Date</th>
-              <th className="px-4 py-3 text-left">Action</th>
+      <div className="overflow-x-auto rounded-lg shadow-xl">
+        <table className="w-full text-sm md:text-base text-left text-gray-300 border-collapse min-w-[600px]">
+          <thead className="bg-gray-800 text-white">
+            <tr>
+              <th className="px-4 py-3">#</th>
+              <th className="px-4 py-3">Product</th>
+              <th className="px-4 py-3">Market</th>
+              <th className="px-4 py-3">Price</th>
+              <th className="px-4 py-3">Date</th>
+              <th className="px-4 py-3">Action</th>
             </tr>
           </thead>
-          <tbody className="bg-gray-900 text-gray-300">
+          <tbody className="bg-gray-900">
             {history.map((item, index) => (
               <tr
                 key={item._id}
@@ -49,15 +48,15 @@ const MyOrderList = () => {
                 <td className="px-4 py-3 font-medium">{item.productName}</td>
                 <td className="px-4 py-3">{item.marketName}</td>
                 <td className="px-4 py-3">$ {item.amount}</td>
-                <td className="px-4 py-3">
-                  {new Date(item.date).toLocaleDateString()}
-                </td>
+                <td className="px-6 py-4">
+                    {item.date ? new Date(item.date).toLocaleDateString() : 'N/A'}
+                  </td>
                 <td className="px-4 py-3">
                   <Link
                     to={`/all-products/${item.productId}`}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg shadow-md transition-transform transform hover:scale-105"
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-md shadow-md text-xs md:text-sm transition hover:scale-105"
                   >
-                    🔍 View Details
+                    🔍 View
                   </Link>
                 </td>
               </tr>

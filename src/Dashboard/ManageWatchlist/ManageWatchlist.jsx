@@ -12,7 +12,6 @@ const ManageWatchlist = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // Fetching watchlist items
   const { data: watchlist = [], isLoading } = useQuery({
     queryKey: ['my-watch-list'],
     queryFn: async () => {
@@ -21,12 +20,11 @@ const ManageWatchlist = () => {
     },
   });
 
-  // Remove from watchlist
   const mutation = useMutation({
-    mutatio1nFn: async (productId) => {
+    mutationFn: async (productId) => {
       return await axiosSecure.delete(`/watchlist/remove?email=${user.email}&productId=${productId}`);
     },
-    onSuccess: (res) => {
+    onSuccess: () => {
       toast.success("Removed from watchlist!");
       queryClient.invalidateQueries(['my-watch-list']);
     },
@@ -51,45 +49,54 @@ const ManageWatchlist = () => {
     });
   };
 
-  if (isLoading) return <p className="text-center py-10">Loading...</p>;
+  if (isLoading) return <p className="text-center py-10 text-gray-300">Loading...</p>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Manage Watchlist</h2>
+    <div className="p-4 md:p-10 bg-base-300 min-h-screen">
+      <h2 className="text-3xl font-bold text-center text-white mb-8">
+        📋 Manage Watchlist
+      </h2>
+
       {watchlist.length === 0 ? (
-        <p className="text-center text-gray-500">Your watchlist is empty.</p>
+        <p className="text-center text-gray-400">Your watchlist is empty.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table table-zebra w-full">
-            <thead className="bg-base-200">
+        <div className="overflow-x-auto rounded-xl shadow-lg">
+          <table className="min-w-full text-left text-sm text-gray-300 bg-[#0f172a]">
+            <thead className="bg-[#1e293b] text-white text-base">
               <tr>
-                <th>#</th>
-                <th>Product Name</th>
-                <th>Market Name</th>
-                <th>Date</th>
-                <th className="text-center">Actions</th>
+                <th className="px-6 py-4 font-semibold">#</th>
+                <th className="px-6 py-4 font-semibold">Product</th>
+                <th className="px-6 py-4 font-semibold">Market</th>
+                <th className="px-6 py-4 font-semibold">Price</th>
+                <th className="px-6 py-4 font-semibold">Date</th>
+                <th className="px-6 py-4 font-semibold text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               {watchlist.map((item, index) => (
-                <tr key={item._id}>
-                  <td>{index + 1}</td>
-                  <td>{item.itemName}</td>
-                  <td>{item.marketName}</td>
-                  <td>{item.date}</td>
-                  <td className="flex flex-col md:flex-row gap-2 justify-center">
-                    <button
-                      onClick={() => navigate('/all-products')}
-                      className="btn btn-sm btn-success"
-                    >
-                      ➕ Add More
-                    </button>
-                    <button
-                      onClick={() => handleRemove(item._id)}
-                      className="btn btn-sm btn-error"
-                    >
-                      ❌ Remove
-                    </button>
+                <tr key={item._id} className="hover:bg-[#1f2937] transition duration-200">
+                  <td className="px-6 py-4">{index + 1}</td>
+                  <td className="px-6 py-4 font-medium text-white">{item.itemName}</td>
+                  <td className="px-6 py-4">{item.marketName}</td>
+                  <td className="px-6 py-4">${item.price || 'N/A'}</td>
+                  <td className="px-6 py-4">
+                    {item.date ? new Date(item.date).toLocaleDateString() : 'N/A'}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <div className="flex justify-center gap-3">
+                      <button
+                        onClick={() => navigate('/all-products')}
+                        className="px-4 py-1.5 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold text-sm transition"
+                      >
+                        🔍 View
+                      </button>
+                      <button
+                        onClick={() => handleRemove(item._id)}
+                        className="px-4 py-1.5 rounded-md bg-red-600 hover:bg-red-700 text-white font-semibold text-sm transition"
+                      >
+                        ❌ Remove
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

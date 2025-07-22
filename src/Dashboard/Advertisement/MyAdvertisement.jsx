@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const MyAdvertisement = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const [editingAd, setEditingAd] = useState(null); // for update modal
+  const [editingAd, setEditingAd] = useState(null);
 
   const {
     data: advertisement = [],
@@ -74,7 +74,28 @@ const MyAdvertisement = () => {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold text-center mb-6">📢 My Advertisements</h2>
-      <div className="overflow-x-auto">
+
+      {/* Responsive card layout for small screens */}
+      <div className="grid gap-4 md:hidden">
+        {advertisement.map((ad) => (
+          <div key={ad._id} className="bg-base-200 p-4 rounded-lg shadow-md">
+            <h3 className="text-lg font-semibold">{ad.title}</h3>
+            <p className="text-sm text-gray-600 mt-1">{ad.description.slice(0, 60)}...</p>
+            <div className="mt-2">
+              <span className={`badge ${ad.status === "approved" ? "badge-success" : "badge-warning"}`}>
+                {ad.status}
+              </span>
+            </div>
+            <div className="flex gap-2 mt-3">
+              <button onClick={() => setEditingAd(ad)} className="btn btn-xs btn-info">Update</button>
+              <button onClick={() => handleDelete(ad._id)} className="btn btn-xs btn-error">Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Table for medium and up screens */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="table w-full">
           <thead className="bg-base-200">
             <tr>
@@ -95,18 +116,8 @@ const MyAdvertisement = () => {
                   </span>
                 </td>
                 <td className="flex gap-2">
-                  <button
-                    onClick={() => setEditingAd(ad)}
-                    className="btn btn-xs btn-info"
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={() => handleDelete(ad._id)}
-                    className="btn btn-xs btn-error"
-                  >
-                    Delete
-                  </button>
+                  <button onClick={() => setEditingAd(ad)} className="btn btn-xs btn-info">Update</button>
+                  <button onClick={() => handleDelete(ad._id)} className="btn btn-xs btn-error">Delete</button>
                 </td>
               </tr>
             ))}
@@ -116,8 +127,8 @@ const MyAdvertisement = () => {
 
       {/* Update Modal */}
       {editingAd && (
-        <div className="fixed inset-0  bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-base-300 p-6 rounded-lg w-full max-w-md">
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 px-4">
+          <div className="bg-base-300 p-6 rounded-lg w-full max-w-md shadow-xl">
             <h3 className="text-xl font-bold mb-4">Update Advertisement</h3>
             <form onSubmit={handleUpdateSubmit} className="space-y-4">
               <input

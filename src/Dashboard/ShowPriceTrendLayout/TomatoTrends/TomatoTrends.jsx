@@ -13,41 +13,38 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Shared/Loading/Loading";
 import { motion } from "framer-motion";
 
-const OrkaTrends = () => {
+const TomatoTrends = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: potataTrend = [], isPending } = useQuery({
-    queryKey: ["potata"],
+  const { data: tomatoTrend = [], isPending } = useQuery({
+    queryKey: ["Product"],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        "/products/orka"
-      );
+      const res = await axiosSecure.get("/products/potata?itemName=Potato");
       return res.data;
     },
   });
   // all data
-    const { data: orkaTrendAll = [], isLoading } = useQuery({
-      queryKey: ["/products/orka-full"],
-      queryFn: async () => {
-        const res = await axiosSecure.get(
-          "/products/orka-full?itemName=Potato"
-        );
-        return res.data;
-      },
-    });
+  const { data: tomatoTrendAll = [], isLoading } = useQuery({
+    queryKey: ["/products/tomato-full"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        "/products/tomato-full?itemName=Potato"
+      );
+      return res.data;
+    },
+  });
 
+  if (isLoading) return <Loading></Loading>;
   if (isPending) return <Loading />;
-  if (isLoading) return <Loading />;
 
   // Format date
-  const formattedData = potataTrend.map((item) => ({
+  const formattedData = tomatoTrend.map((item) => ({
     ...item,
     date: new Date(item.date).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
     }),
   }));
-
   // Trend Calculation
   let trend = 0;
   if (formattedData.length >= 2) {
@@ -63,17 +60,20 @@ const OrkaTrends = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-       <div className="flex justify-around text-2xl font-bold text-blue-800 mb-6 text-center tracking-wide">
-        <p>🥔 {orkaTrendAll.itemName} Price Trend</p>
+      <div className="flex justify-around text-2xl font-bold text-blue-800 mb-6 text-center tracking-wide">
+        <p>🥔 {tomatoTrendAll.itemName} Price Trend</p>
        <div>
-         <p>Item Name: {orkaTrendAll.itemName}</p>
-        <p>Market Name: {orkaTrendAll.marketName}</p>
+         <p>Item Name: {tomatoTrendAll.itemName}</p>
+        <p>Market Name: {tomatoTrendAll.marketName}</p>
        </div>
       </div>
 
       <div className="w-full h-[250px] md:h-[350px] lg:h-[500px]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={formattedData} margin={{ top: 10, right: 30, left: 0, bottom: 5 }}>
+          <LineChart
+            data={formattedData}
+            margin={{ top: 10, right: 30, left: 0, bottom: 5 }}
+          >
             <CartesianGrid strokeDasharray="3 3" stroke="#d1d5db" />
             <XAxis
               dataKey="date"
@@ -128,4 +128,4 @@ const OrkaTrends = () => {
   );
 };
 
-export default OrkaTrends;
+export default TomatoTrends;

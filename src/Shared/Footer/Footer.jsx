@@ -8,8 +8,8 @@ const Footer = () => {
         
         {/* Logo & Website Name */}
         <div className="flex flex-col items-center lg:items-start gap-2">
-          <img src="/logo.png" alt="Logo" className="w-14" />
-          <h1 className="text-xl md:text-2xl font-bold text-white">Raw Market</h1>
+          
+          <h1 className="text-xl md:text-2xl font-bold text-white">🥬 Raw Market</h1>
           <p className="text-sm">Your trusted source for local products.</p>
         </div>
 
