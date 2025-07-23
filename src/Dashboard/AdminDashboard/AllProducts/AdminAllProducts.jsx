@@ -3,6 +3,7 @@ import { Link } from "react-router"; // ✅ fix route import
 import Swal from "sweetalert2";
 import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loading from "../../../Shared/Loading/Loading";
 
 const AdminAllProducts = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,10 +17,13 @@ const AdminAllProducts = () => {
   } = useQuery({
     queryKey: ["all-products-admin", page],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/admin/products?page=${page}&limit=${limit}`);
+      const res = await axiosSecure.get(
+        `/admin/products?page=${page}&limit=${limit}`
+      );
       return res.data;
     },
   });
+  console.log(data);
 
   const products = data.products || [];
   const total = data.total || 0;
@@ -33,22 +37,39 @@ const AdminAllProducts = () => {
     }
   };
 
-  const handleReject = async (id) => {
-    const { value: reason } = await Swal.fire({
-      title: "Reject Product",
-      input: "text",
-      inputLabel: "Reason for rejection",
-      inputPlaceholder: "Enter reason here...",
-      showCancelButton: true,
-    });
-    if (reason) {
-      const res = await axiosSecure.patch(`/products/reject/${id}`, { reason });
-      if (res.data.modifiedCount > 0) {
-        refetch();
-        Swal.fire("❌ Rejected!", "Product has been rejected.", "error");
+ const handleReject = async (id) => {
+  const { value: formValues } = await Swal.fire({
+    title: "Reject Product",
+    html: `
+      <input id="swal-reason" class="swal2-input" placeholder="Rejection reason" />
+      <textarea id="swal-feedback" class="swal2-textarea" placeholder="Additional feedback (optional)"></textarea>
+    `,
+    focusConfirm: false,
+    showCancelButton: true,
+    preConfirm: () => {
+      const reason = document.getElementById("swal-reason").value.trim();
+      const feedback = document.getElementById("swal-feedback").value.trim();
+
+      if (!reason) {
+        Swal.showValidationMessage("Rejection reason is required");
+        return false;
       }
+
+      return { reason, feedback };
+    },
+  });
+
+  if (formValues) {
+    const res = await axiosSecure.patch(`/products/reject/${id}`, formValues);
+
+    if (res.data.modifiedCount > 0) {
+      refetch();
+      Swal.fire("❌ Rejected!", "Product has been rejected.", "error");
     }
-  };
+  }
+};
+
+
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -67,7 +88,7 @@ const AdminAllProducts = () => {
     }
   };
 
-  if (isPending) return <div className="text-center py-10">Loading...</div>;
+  if (isPending) return <Loading></Loading>;
 
   return (
     <div className="max-w-7xl mx-auto px-2 sm:px-4 py-10">
@@ -89,7 +110,9 @@ const AdminAllProducts = () => {
           <tbody>
             {products.map((product, index) => (
               <tr key={product._id} className="hover">
-                <td className="py-2 px-2 font-medium">{(page - 1) * limit + index + 1}</td>
+                <td className="py-2 px-2 font-medium">
+                  {(page - 1) * limit + index + 1}
+                </td>
                 <td className="py-2 px-2">{product.itemName}</td>
                 <td className="py-2 px-2 break-all">{product.vendorEmail}</td>
                 <td className="py-2 px-2 capitalize">
