@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Banner from '../Banner/Banner';
 import HomeProductSec from '../HomeProductSec/HomeProductSec';
 import HomeAdvertisement from '../HomeAdvertisement/HomeAdvertisement';
+import MarketTips from '../MarketTips/MarketTips';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -43,6 +44,16 @@ const Home = () => {
         key="advertisement"
       >
         <HomeAdvertisement />
+      </motion.div>
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        key="advertisement"
+      >
+        <MarketTips></MarketTips>
       </motion.div>
     </div>
   );

@@ -42,8 +42,10 @@ const AllProducts = () => {
 
       const res = await axiosSecure.get(`/products/all-approved?${params.toString()}`);
       return res.data;
+      
     },
   });
+  
 
   const handleSortChange = (e) => {
     setSort(e.target.value);
