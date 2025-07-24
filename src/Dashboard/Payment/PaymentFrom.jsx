@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Shared/Loading/Loading";
 import useAuth from "../../hooks/useAuth";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 const PaymentFrom = () => {
   const [error, setError] = useState("");
@@ -22,23 +23,18 @@ const PaymentFrom = () => {
       return res.data;
     },
   });
+
   const cost = product.pricePerUnit;
   const costInCents = cost * 100;
-  console.log(product);
 
   if (isPending) return <Loading />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!stripe || !element) {
-      return;
-    }
+    if (!stripe || !element) return;
 
     const card = element.getElement(CardElement);
-
-    if (!card) {
-      return;
-    }
+    if (!card) return;
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -47,24 +43,29 @@ const PaymentFrom = () => {
 
     if (error) {
       setError(error.message);
+      toast.error(error.message);
+      return;
     } else {
       setError("");
-      console.log(paymentMethod);
     }
 
-    // create payment intent
-    const res = await axiosSecure.post("/create-payment-intent", {
-      amount: costInCents,
-      id,
-    });
+    // Create payment intent
+    let clientSecret = "";
+    try {
+      const res = await axiosSecure.post("/create-payment-intent", {
+        amount: costInCents,
+        id,
+      });
+      clientSecret = res.data.clientSecret;
+    } catch (err) {
+      toast.error("❌ Failed to create payment intent");
+      return;
+    }
 
-    console.log("res from", res);
-
-    const clientSecret = res.data.clientSecret;
-
+    // Confirm payment
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: element.getElement(CardElement),
+        card,
         billing_details: {
           name: user.displayName,
           email: user.email,
@@ -73,38 +74,41 @@ const PaymentFrom = () => {
     });
 
     if (result.error) {
-      console.log(result.error.message);
       setError(result.error.message);
+      toast.error(result.error.message, "ra");
     } else {
       setError("");
       if (result.paymentIntent.status === "succeeded") {
-        console.log("payment succeeded");
-        console.log(result);
-
-        const paymentSuccesData = {
+        const paymentSuccessData = {
           productId: id,
           email: user.email,
           amount: parseInt(cost),
           transactionId: result.paymentIntent.id,
           paymentMethod: result.paymentIntent.payment_method_types[0],
           marketName: product.marketName,
-          productName: product.itemName
+          productName: product.itemName,
         };
 
-        const paymentRes = await axiosSecure.post(
-          "/confirm-payment",
-          paymentSuccesData
-        );
-        if(paymentRes.data.insertedId){
-          console.log('payment succeeded')
+        try {
+          const paymentRes = await axiosSecure.post(
+            "/confirm-payment",
+            paymentSuccessData
+          );
+          console.log(paymentRes.data);
+          if (paymentRes.data.insertResult.insertedId) {
+            toast.success("✅ Payment successful!");
+          } else {
+            toast.error("❌ Payment recorded failed on server.");
+          }
+        } catch (err) {
+          toast.error("❌ Server error while confirming payment.");
         }
-
       }
     }
   };
-  console.log(id);
+
   return (
-       <div className="min-h-screen flex items-center justify-center  p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <motion.form
         onSubmit={handleSubmit}
         className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl p-8 w-full max-w-md"

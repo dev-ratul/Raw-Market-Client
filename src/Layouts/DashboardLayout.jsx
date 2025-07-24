@@ -4,7 +4,7 @@ import { NavLink, Outlet } from "react-router";
 import Navbar from "../Shared/Navbar/Navbar"; // তোমার Header Component
 import Footer from "../Shared/Footer/Footer"; // তোমার Footer Component
 import useUserRole from "../hooks/useUserRole";
-import { FaBars } from "react-icons/fa";
+import { FaBars,  } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const { role, roleLoading } = useUserRole();
@@ -137,7 +137,7 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <NavLink to="/dashboard/add-special-offer" className={navLinkClass}>
-                    AddSpecialOffer
+                  ✨ Add Special Offer
                   </NavLink>
                 </li>
               </>

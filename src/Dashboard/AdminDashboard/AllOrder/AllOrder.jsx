@@ -18,7 +18,6 @@ const AllOrder = () => {
   if (isPending) {
     return <Loading />;
   }
-  
 
   return (
     <div className="p-6 min-h-screen bg-base-200 text-white">
@@ -47,11 +46,14 @@ const AllOrder = () => {
                 <td>${item.amount}</td>
                 <td className="text-xs break-all">{item.transactionId}</td>
                 <td>
-                  {new Date(
-                    Number(item.paid_at?.$date?.$numberLong)
-                  ).toLocaleDateString()}
+                  {new Date(item.paid_at_string).toLocaleString("en-GB", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </td>
-            
               </tr>
             ))}
           </tbody>
