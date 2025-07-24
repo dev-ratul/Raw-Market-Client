@@ -1,6 +1,4 @@
-import {
-  createBrowserRouter,
-} from "react-router";
+import { createBrowserRouter } from "react-router";
 import Root from "../Layouts/Root";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Shared/Login/Login";
@@ -30,124 +28,160 @@ import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 import Forbidden from "../Componennt/Forbidden/Forbidden";
 import AdminRoute from "./AdminRoute";
 import TomatoTrends from "../Dashboard/ShowPriceTrendLayout/TomatoTrends/TomatoTrends";
-
+import AddSpecialOffer from "../Dashboard/AdminDashboard/AddSpecialOffer/AddSpecialOffer";
+import SpecialOffer from "../Shared/SpecialOffer/SpecialOffer";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
-    children:[
-        {
-            index: true,
-            Component: Home
-        },
-        {
-            path: '/login',
-            Component: Login
-        },
-        {
-            path: '/register',
-            Component: Register
-        },
-        {
-          path: 'all-products',
-          Component: AllProducts
-        },
-        {
-          path: '/all-products/:id',
-          element: <PrivateRoute><ViewDetails></ViewDetails></PrivateRoute>
-        },
-        {
-        path: '/forbidden',
-        Component: Forbidden
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
+      },
+      {
+        path: "all-products",
+        Component: AllProducts,
+      },
+      {
+        path: "/all-products/:id",
+        element: (
+          <PrivateRoute>
+            <ViewDetails></ViewDetails>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/forbidden",
+        Component: Forbidden,
+      },
+      {
+        path: '/special-offer',
+        Component: SpecialOffer
       }
-    ]
+    ],
   },
   {
-    path: '/dashboard',
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
-    children:[
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
       {
-        path: 'add-product',
-        Component: AddProduct
+        path: "add-product",
+        Component: AddProduct,
       },
       {
-        path: 'my-product',
-        Component: MyProduct
+        path: "my-product",
+        Component: MyProduct,
       },
       {
-        path: 'update-product/:id',
-        Component: UpdateProduct
+        path: "update-product/:id",
+        Component: UpdateProduct,
       },
       {
-        path: 'add-advertisement',
-        Component: AddAdvertisement
+        path: "add-advertisement",
+        Component: AddAdvertisement,
       },
       {
-        path: 'my-advertisement',
-        Component: MyAdvertisement
+        path: "my-advertisement",
+        Component: MyAdvertisement,
       },
       {
-        path: 'show-price-trend-layout',
+        path: "show-price-trend-layout",
         Component: ShowPriceTrendLayout,
-        children:[
+        children: [
           {
-            index:true,
-            Component: PotataTrends
+            index: true,
+            Component: PotataTrends,
           },
           {
-            path: 'show-price-trend-layout/potata',
-            Component: PotataTrends
+            path: "show-price-trend-layout/potata",
+            Component: PotataTrends,
           },
           {
-            path: 'show-price-trend-layout/onion',
-            Component: OnionTrends
+            path: "show-price-trend-layout/onion",
+            Component: OnionTrends,
           },
           {
-            path: 'show-price-trend-layout/orka',
-            Component: OrkaTrends
+            path: "show-price-trend-layout/orka",
+            Component: OrkaTrends,
           },
           {
-            path: 'show-price-trend-layout/tomato',
-            Component: TomatoTrends
-          }
-          
-        ]
+            path: "show-price-trend-layout/tomato",
+            Component: TomatoTrends,
+          },
+        ],
       },
       {
-        path: 'all-users',
-        element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+        path: "all-users",
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
       },
       {
-        path: 'all-products',
-        element: <AdminRoute><AdminAllProducts></AdminAllProducts></AdminRoute>
+        path: "all-products",
+        element: (
+          <AdminRoute>
+            <AdminAllProducts></AdminAllProducts>
+          </AdminRoute>
+        ),
       },
       {
-        path: 'all-advertisements',
-        element: <AdminRoute><AllAdvertisements></AllAdvertisements></AdminRoute>
+        path: "all-advertisements",
+        element: (
+          <AdminRoute>
+            <AllAdvertisements></AllAdvertisements>
+          </AdminRoute>
+        ),
         // Component: AllAdvertisements
       },
       {
-        path: '/dashboard/manage-watchlist',
-        Component: ManageWatchlist
+        path: "/dashboard/manage-watchlist",
+        Component: ManageWatchlist,
       },
       {
-        path: 'payment/:id',
-        Component: Payment
+        path: "payment/:id",
+        Component: Payment,
       },
       {
-        path: 'my-order-list',
-        Component: MyOrderList
+        path: "my-order-list",
+        Component: MyOrderList,
       },
       {
-        path: 'all-order',
-        element: <AdminRoute><AllOrder></AllOrder></AdminRoute>
+        path: "all-order",
+        element: (
+          <AdminRoute>
+            <AllOrder></AllOrder>
+          </AdminRoute>
+        ),
         // Component: AllOrder
-      }
-    ]
+      },
+      {
+        path: `/dashboard/add-special-offer`,
+        element: (
+          <AdminRoute>
+            <AddSpecialOffer></AddSpecialOffer>
+          </AdminRoute>
+        ),
+      },
+    ],
   },
   {
     path: "*",
-    element: <ErrorPage></ErrorPage>
-  }
+    element: <ErrorPage></ErrorPage>,
+  },
 ]);

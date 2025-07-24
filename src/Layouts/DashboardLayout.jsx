@@ -135,6 +135,11 @@ const DashboardLayout = () => {
                     🛒 All Order
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/dashboard/add-special-offer" className={navLinkClass}>
+                    AddSpecialOffer
+                  </NavLink>
+                </li>
               </>
             )}
           </ul>

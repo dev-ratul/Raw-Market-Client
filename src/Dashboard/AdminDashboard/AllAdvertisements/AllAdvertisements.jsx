@@ -12,7 +12,7 @@ const AllAdvertisements = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["allAdvertisements"],
+    queryKey: ["Advertisements"],
     queryFn: async () => {
       const res = await axiosSecure.get("/advertisements");
       return res.data;

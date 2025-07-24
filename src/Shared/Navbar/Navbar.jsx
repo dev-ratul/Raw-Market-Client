@@ -4,6 +4,7 @@ import { MdDashboard } from "react-icons/md";
 import { FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import useAuth from "../../hooks/useAuth";
+import { BiSolidOffer } from "react-icons/bi";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -42,11 +43,26 @@ const Navbar = () => {
         <FaShoppingCart className="text-lg" />
         All Products
       </NavLink>
+      <NavLink
+        to="/special-offer"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center gap-2 text-lime-300 border-b-2 border-lime-300 pb-1"
+            : "flex items-center gap-2 hover:text-lime-300 transition"
+        }
+      >
+        <BiSolidOffer className="text-lg" />
+        Offer
+      </NavLink>
 
       <NavLink
         to="/dashboard"
         onClick={() => setIsMenuOpen(false)}
-        className="flex items-center gap-1 hover:text-lime-300 transition"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center gap-2 text-lime-300 border-b-2 border-lime-300 pb-1"
+            : "flex items-center gap-2 hover:text-lime-300 transition"
+        }
       >
         <MdDashboard className="text-xl" />
         Dashboard
@@ -156,11 +172,10 @@ const Navbar = () => {
                 {user?.displayName && (
                   <p className="text-lg font-semibold bg-lime-400 text-black p-1 rounded-full">
                     {user?.email && (
-                  <p className="text-sm text-black">{user.email}</p>
-                )}
+                      <p className="text-sm text-black">{user.email}</p>
+                    )}
                   </p>
                 )}
-                
               </div>
 
               {/* Menu Items */}

@@ -4,19 +4,19 @@ import { motion } from "framer-motion";
 const MarketTips = () => {
   const tips = [
     {
-      title: "🥬 কিভাবে টাটকা সবজি চেনা যায়?",
+      title: "🥬 How to Identify Fresh Vegetables?",
       description:
-        "সবজি কিনতে গেলে এর রঙ, গন্ধ এবং মোলায়েমতা দেখে বুঝতে পারো টাটকা কিনা। যেমন কপি বা পালং পাতার সবুজ ভাব থাকলে সেটা টাটকা।",
+        "When buying vegetables, check their color, smell, and texture to determine freshness. For example, if spinach or cabbage has a vibrant green color, it's likely fresh.",
     },
     {
-      title: "🧼 হাইজিন বজায় রাখার টিপস",
+      title: "🧼 Hygiene Tips",
       description:
-        "বাজার থেকে বাড়ি ফিরে প্রোডাক্ট ভালো করে পানি দিয়ে ধুয়ে ফেলো। শুকনো জিনিস আলাদা করে সংরক্ষণ করো।",
+        "After returning from the market, wash all products thoroughly with water. Store dry items separately in clean containers.",
     },
     {
-      title: "🍎 মৌসুমি ফল চেনার কৌশল",
+      title: "🍎 How to Identify Seasonal Fruits",
       description:
-        "মৌসুমি ফল যেমন আম, লিচু — এদের গন্ধ ও রঙ দিয়ে সহজে বোঝা যায় টাটকা কিনা। পাকা ফলে প্রাকৃতিক সুবাস থাকবে।",
+        "Fruits like mangoes or lychees can be identified by their natural scent and color. Ripe seasonal fruits usually have a fresh and sweet aroma.",
     },
   ];
 
@@ -37,7 +37,11 @@ const MarketTips = () => {
   // Each card animation variant
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
 
   return (
@@ -63,11 +67,15 @@ const MarketTips = () => {
               key={index}
               className="bg-green-50 p-6 rounded-xl shadow-md hover:shadow-lg transition"
               variants={cardVariants}
-              whileHover={{ scale: 1.05, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+              }}
             >
-              <h3 className="text-xl font-semibold text-green-800">{tip.title}</h3>
+              <h3 className="text-xl font-semibold text-green-800">
+                {tip.title}
+              </h3>
               <p className="mt-3 text-gray-700 text-sm">{tip.description}</p>
-              
             </motion.div>
           ))}
         </div>

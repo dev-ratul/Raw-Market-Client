@@ -4,6 +4,7 @@ import Banner from '../Banner/Banner';
 import HomeProductSec from '../HomeProductSec/HomeProductSec';
 import HomeAdvertisement from '../HomeAdvertisement/HomeAdvertisement';
 import MarketTips from '../MarketTips/MarketTips';
+import HomeSpecialOffer from '../HomeSpecialOffer/HomeSpecialOffer';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -53,8 +54,21 @@ const Home = () => {
         viewport={{ once: true, amount: 0.3 }}
         key="advertisement"
       >
+        <HomeSpecialOffer></HomeSpecialOffer>
+      </motion.div>
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        key="advertisement"
+      >
         <MarketTips></MarketTips>
       </motion.div>
+
+
+      
     </div>
   );
 };
