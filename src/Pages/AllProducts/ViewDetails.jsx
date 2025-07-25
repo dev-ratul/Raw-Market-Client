@@ -127,7 +127,7 @@ const ViewDetails = () => {
       });
       if (res.data.length > 0) {
         setChartData(res.data);
-        console.log(res.data);
+        //console.log(res.data);
       } else {
         Swal.fire({
           icon: "info",

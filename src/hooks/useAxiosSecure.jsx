@@ -1,23 +1,10 @@
-// import axios from "axios";
-
-// const axiosSecure= axios.create({
-//     baseURL: 'http://localhost:3000'
-// })
-
-// const useAxiosSecure=()=>{
-//     return axiosSecure;
-// }
-
-// export default useAxiosSecure;
-
-
 
 import axios from "axios";
 import { useNavigate } from "react-router";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-  baseURL: `http://localhost:3000`, // যেটা তোর server এর port
+  baseURL: `https://raw-market-server.vercel.app`
 });
 
 const useAxiosSecure = () => {
@@ -28,7 +15,7 @@ const useAxiosSecure = () => {
   axiosSecure.interceptors.request.use(
     (config) => {
       if (user?.accessToken) {
-        config.headers.Authorization = `Bearer ${user.accessToken}`;
+        config.headers.Authorization = `Bearer ${user.accessToken}`
       }
       return config;
     },

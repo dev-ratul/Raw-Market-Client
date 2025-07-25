@@ -14,7 +14,7 @@ const Navbar = () => {
   const handleLogout = () => {
     logout()
       .then(() => {
-        console.log("User signed out successfully");
+        //console.log("User signed out successfully");
         navigate("/");
         setIsMenuOpen(false); // মেনু ক্লোজ
       })

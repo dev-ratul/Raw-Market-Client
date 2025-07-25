@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Loading from "../../../Shared/Loading/Loading";
 
 const AllUsers = () => {
+  
   const axiosSecure = useAxiosSecure();
   const [searchText, setSearchText] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -84,7 +85,7 @@ const AllUsers = () => {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Email</th>
+
               <th>Role</th>
               <th>Actions</th>
             </tr>
@@ -100,7 +101,7 @@ const AllUsers = () => {
               users.map((user, index) => (
                 <tr key={user._id}>
                   <td>{index + 1}</td>
-                  <td>{user.name || "N/A"}</td>
+
                   <td>{user.email}</td>
                   <td className="capitalize">{user.role || "user"}</td>
                   <td>

@@ -17,22 +17,25 @@ const PotataTrends = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: potataTrend = [], isPending } = useQuery({
-    queryKey: ["Product"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/products/potata?itemName=Potato");
-      return res.data;
-    },
-  });
+  queryKey: ["Product"],
+  queryFn: async () => {
+    const res = await axiosSecure.get("/products/potata?itemName=Potato");
+    return res.data;
+  },
+});
+
+  //console.log(potataTrend)
   // all data
-  const { data: potataTrendAll = [], isLoading } = useQuery({
-    queryKey: ["/products/potata-full"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        "/products/potata-full?itemName=Potato"
-      );
-      return res.data;
-    },
-  });
+  const itemName = "Potato"; // or Tomato, Onion etc.
+const { data: potataTrendAll = [], isLoading } = useQuery({
+  queryKey: ["/products/tomato-full", itemName],
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/products/tomato-full?itemName=${itemName}`);
+    return res.data;
+  },
+});
+
+  //console.log(potataTrendAll)
 
   if (isPending) return <Loading />;
   if (isLoading) return <Loading></Loading>;

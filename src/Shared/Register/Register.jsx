@@ -19,12 +19,12 @@ const Register = () => {
 
   
   const onSubmit = (data) => {
-    console.log("Register Data:", data);
+    //console.log("Register Data:", data);
 
     // register
     signUp(data.email, data.password)
       .then(async(result) => {
-        console.log(result);
+        //console.log(result);
 
 
         const userInfo={
@@ -35,7 +35,7 @@ const Register = () => {
         }
 
         const userRes= await axiosInstense.post('/users', userInfo)
-        console.log(userRes.data)
+        //console.log(userRes.data)
 
 
         const profileInfo = {
@@ -45,22 +45,22 @@ const Register = () => {
 
         updateUserProfile(profileInfo)
           .then(() => {
-            console.log("update profile");
+            //console.log("update profile");
           })
           .catch((error) => {
-            console.log(error);
+            //console.log(error);
           });
 
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
   const handleUploadImage =async(e) => {
     const image = e.target.files[0];
-    console.log(image)
+    //console.log(image)
 
 
     const formData= new FormData()

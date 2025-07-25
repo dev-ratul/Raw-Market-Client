@@ -9,7 +9,7 @@ const Login = () => {
   const { login, user, googleLogin } = useAuth();
   const navigate = useNavigate();
   const axiosInstanse = useAxios();
-  console.log(user);
+  //console.log(user);
   const {
     register,
     handleSubmit,
@@ -17,16 +17,16 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    //console.log(data);
 
     // login
     login(data.email, data.password)
       .then((result) => {
-        console.log(result);
+        //console.log(result);
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -60,7 +60,7 @@ const Login = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 

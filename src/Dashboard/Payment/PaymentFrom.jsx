@@ -94,7 +94,7 @@ const PaymentFrom = () => {
             "/confirm-payment",
             paymentSuccessData
           );
-          console.log(paymentRes.data);
+          //console.log(paymentRes.data);
           if (paymentRes.data.insertResult.insertedId) {
             toast.success("✅ Payment successful!");
           } else {

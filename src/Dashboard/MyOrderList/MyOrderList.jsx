@@ -3,6 +3,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router";
+import Loading from "../../Shared/Loading/Loading";
 
 const MyOrderList = () => {
   const { user } = useAuth();
@@ -17,8 +18,7 @@ const MyOrderList = () => {
     },
   });
 
-  if (isLoading)
-    return <div className="text-center py-10 text-white">Loading...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="bg-base-300 min-h-screen px-4 md:px-10 py-12">
@@ -49,8 +49,11 @@ const MyOrderList = () => {
                 <td className="px-4 py-3">{item.marketName}</td>
                 <td className="px-4 py-3">$ {item.amount}</td>
                 <td className="px-6 py-4">
-                    {item.date ? new Date(item.date).toLocaleDateString() : 'N/A'}
-                  </td>
+                  {item.paid_at_string
+                    ? new Date(item.paid_at_string).toLocaleDateString()
+                    : "N/A"}
+                </td>
+
                 <td className="px-4 py-3">
                   <Link
                     to={`/all-products/${item.productId}`}

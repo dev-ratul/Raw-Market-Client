@@ -13,7 +13,7 @@ const AllOrder = () => {
       return res.data;
     },
   });
-  console.log(history);
+  //console.log(history);
 
   if (isPending) {
     return <Loading />;

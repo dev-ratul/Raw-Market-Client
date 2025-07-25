@@ -8,7 +8,7 @@ import { FaBars,  } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const { role, roleLoading } = useUserRole();
-  console.log(role);
+  //console.log(role);
   const navLinkClass = ({ isActive }) =>
     isActive
       ? "flex items-center gap-3 text-white bg-blue-600 px-4 py-2 rounded"

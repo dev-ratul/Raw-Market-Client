@@ -131,6 +131,7 @@ const UpdateProduct = () => {
             />
             <input
               type="date"
+              readOnly
               {...register("date", { required: true })}
               className="input input-bordered w-full bg-[#1e293b] border border-[#475569] text-white"
             />

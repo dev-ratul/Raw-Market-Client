@@ -23,7 +23,7 @@ const AdminAllProducts = () => {
       return res.data;
     },
   });
-  console.log(data);
+  //console.log(data);
 
   const products = data.products || [];
   const total = data.total || 0;

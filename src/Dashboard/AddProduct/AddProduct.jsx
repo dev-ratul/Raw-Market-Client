@@ -41,8 +41,9 @@ const AddProduct = () => {
     };
 
     try {
-      const result = await axiosSecure.post("products", finalData);
-      console.log(result);
+      const result = await axiosSecure.post("/products", finalData);
+      //console.log(result)
+      //console.log(finalData)
 
       if (result?.data?.insertedId) {
         Swal.fire({
@@ -67,7 +68,7 @@ const AddProduct = () => {
         itemDescription: "",
       });
 
-      console.log("✅ Submitted Product:", finalData);
+      //console.log("✅ Submitted Product:", finalData);
     } catch (error) {
       console.error("❌ Failed to submit product:", error);
       Swal.fire({

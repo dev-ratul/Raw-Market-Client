@@ -16,23 +16,23 @@ import { motion } from "framer-motion";
 const TomatoTrends = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: tomatoTrend = [], isPending } = useQuery({
-    queryKey: ["Product"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/products/potata?itemName=Potato");
-      return res.data;
-    },
-  });
+ const { data: tomatoTrend = [], isPending } = useQuery({
+  queryKey: ["Tomato"],
+  queryFn: async () => {
+    const res = await axiosSecure.get("/products/tomato?itemName=Tomato");
+    return res.data;
+  },
+});
+
   // all data
-  const { data: tomatoTrendAll = [], isLoading } = useQuery({
-    queryKey: ["/products/tomato-full"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        "/products/tomato-full?itemName=Potato"
-      );
-      return res.data;
-    },
-  });
+  const itemName = "Tomato"; // or Tomato, Onion etc.
+const { data: tomatoTrendAll  = [], isLoading } = useQuery({
+  queryKey: ["/products/tomato-full", itemName],
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/products/tomato-full?itemName=${itemName}`);
+    return res.data;
+  },
+});
 
   if (isLoading) return <Loading></Loading>;
   if (isPending) return <Loading />;

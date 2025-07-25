@@ -21,7 +21,7 @@ const MyProduct = () => {
     return <Loading></Loading>
   }
 
-  console.log(myProduct)
+  //console.log(myProduct)
 
 
   return (

@@ -1,10 +1,11 @@
-import React from 'react';
-import useAuth from '../../hooks/useAuth';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router';
-import Swal from 'sweetalert2';
+import React from "react";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import Loading from "../../Shared/Loading/Loading";
 
 const ManageWatchlist = () => {
   const { user } = useAuth();
@@ -13,7 +14,7 @@ const ManageWatchlist = () => {
   const queryClient = useQueryClient();
 
   const { data: watchlist = [], isLoading } = useQuery({
-    queryKey: ['my-watch-list'],
+    queryKey: ["my-watch-list"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/my-watch-list?email=${user.email}`);
       return res.data;
@@ -22,11 +23,13 @@ const ManageWatchlist = () => {
 
   const mutation = useMutation({
     mutationFn: async (productId) => {
-      return await axiosSecure.delete(`/watchlist/remove?email=${user.email}&productId=${productId}`);
+      return await axiosSecure.delete(
+        `/watchlist/remove?email=${user.email}&productId=${productId}`
+      );
     },
     onSuccess: () => {
       toast.success("Removed from watchlist!");
-      queryClient.invalidateQueries(['my-watch-list']);
+      queryClient.invalidateQueries(["my-watch-list"]);
     },
     onError: () => {
       toast.error("Failed to remove from watchlist!");
@@ -35,13 +38,13 @@ const ManageWatchlist = () => {
 
   const handleRemove = (productId) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'Do you want to remove this item from your watchlist?',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "Do you want to remove this item from your watchlist?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, remove it!',
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, remove it!",
     }).then((result) => {
       if (result.isConfirmed) {
         mutation.mutate(productId);
@@ -49,7 +52,7 @@ const ManageWatchlist = () => {
     });
   };
 
-  if (isLoading) return <p className="text-center py-10 text-gray-300">Loading...</p>;
+  if (isLoading) return <Loading></Loading>;
 
   return (
     <div className="p-4 md:p-10 bg-base-300 min-h-screen">
@@ -74,18 +77,25 @@ const ManageWatchlist = () => {
             </thead>
             <tbody>
               {watchlist.map((item, index) => (
-                <tr key={item._id} className="hover:bg-[#1f2937] transition duration-200">
+                <tr
+                  key={item._id}
+                  className="hover:bg-[#1f2937] transition duration-200"
+                >
                   <td className="px-6 py-4">{index + 1}</td>
-                  <td className="px-6 py-4 font-medium text-white">{item.itemName}</td>
+                  <td className="px-6 py-4 font-medium text-white">
+                    {item.itemName}
+                  </td>
                   <td className="px-6 py-4">{item.marketName}</td>
-                  <td className="px-6 py-4">${item.price || 'N/A'}</td>
+                  <td className="px-6 py-4">${item.pricePerUnit || "N/A"}</td>
                   <td className="px-6 py-4">
-                    {item.date ? new Date(item.date).toLocaleDateString() : 'N/A'}
+                    {item.date
+                      ? new Date(item.date).toLocaleDateString()
+                      : "N/A"}
                   </td>
                   <td className="px-6 py-4 text-center">
                     <div className="flex justify-center gap-3">
                       <button
-                        onClick={() => navigate('/all-products')}
+                        onClick={() => navigate("/all-products")}
                         className="px-4 py-1.5 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold text-sm transition"
                       >
                         🔍 View

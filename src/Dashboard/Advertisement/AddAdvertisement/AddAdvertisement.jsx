@@ -29,7 +29,7 @@ const AddAdvertisement = () => {
 
     try {
       const result = await axiosSecure.post("/advertisement", data);
-      console.log("✅ Response:", result);
+      //console.log("✅ Response:", result);
 
       if (result?.data?.insertedId) {
         Swal.fire({
