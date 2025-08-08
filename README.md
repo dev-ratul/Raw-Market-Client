@@ -30,7 +30,8 @@ A full-featured web application that tracks and compares the daily prices of loc
 
 ## 📸 Screenshot
 
-![Raw Market Homepage Screenshot](https://i.ibb.co/XYZ123/raw-market-home.png)
+![Raw Market Homepage Screenshot](https://i.ibb.co.com/JWh7zv15/Screenshot-150.png)
+
 
 ---
 
@@ -59,18 +60,6 @@ A full-featured web application that tracks and compares the daily prices of loc
 - Stripe Payment Integration
 - Morgan (optional logger)
 
----
 
-## 📁 Project Structure
-
-```bash
-raw-market-client/
-├── src/
-│   ├── components/
-│   ├── layouts/
-│   ├── pages/
-│   ├── routes/
-│   └── hooks/
-└── .env
 
 
