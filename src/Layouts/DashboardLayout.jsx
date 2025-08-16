@@ -1,6 +1,6 @@
 // src/Layouts/DashboardLayout.jsx
 import React from "react";
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import Navbar from "../Shared/Navbar/Navbar"; // তোমার Header Component
 import Footer from "../Shared/Footer/Footer"; // তোমার Footer Component
 import useUserRole from "../hooks/useUserRole";
@@ -46,7 +46,7 @@ const DashboardLayout = () => {
         <div className="drawer-side mt-36 lg:mt-0">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-64 min-h-full bg-base-200 space-y-2 text-base-content">
-            <h2 className="text-xl font-bold mb-4">Dashboard</h2>
+            <Link to={'/dashboard'} className="text-xl font-bold mb-4">Dashboard</Link>
 
             {
               !roleLoading && role === "user" && 
