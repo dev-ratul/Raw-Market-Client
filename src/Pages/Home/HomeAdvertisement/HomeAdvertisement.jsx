@@ -47,10 +47,10 @@ const HomeAdvertisement = () => {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 my-16">
       {/* Section Title */}
       <div className="text-center mb-10 px-2 sm:px-6">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-lime-600">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
           Advertisement Highlights
         </h2>
-        <p className="text-gray-600 mt-2 max-w-xl mx-auto text-sm sm:text-base">
+        <p className="text-gray-300 mt-2 max-w-xl mx-auto text-sm sm:text-base">
           Explore all current promotions and vendor ads through this interactive carousel.
         </p>
       </div>

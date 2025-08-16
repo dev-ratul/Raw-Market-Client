@@ -8,27 +8,29 @@ import { BiSolidOffer } from "react-icons/bi";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
+  const navigate = useNavigate();
 
+  // Logout function
   const handleLogout = () => {
     logout()
       .then(() => {
-        //console.log("User signed out successfully");
         navigate("/");
-        setIsMenuOpen(false); // মেনু ক্লোজ
+        setIsMenuOpen(false);
       })
       .catch((error) => {
         console.error("Sign out error:", error);
       });
   };
+  console.log(user);
 
-  // মেনু টগল ফাংশন
+  // Toggle mobile menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // মেনু আইটেমস
+  // Navbar Menu Items
   const menuItems = (
     <>
       <NavLink
@@ -36,19 +38,21 @@ const Navbar = () => {
         onClick={() => setIsMenuOpen(false)}
         className={({ isActive }) =>
           isActive
-            ? "flex items-center gap-2 text-lime-300 border-b-2 border-lime-300 pb-1"
-            : "flex items-center gap-2 hover:text-lime-300 transition"
+            ? "flex items-center gap-2 border-b-2 border-white pb-1"
+            : "flex items-center gap-2 hover:border-b-2 border-white transition"
         }
       >
         <FaShoppingCart className="text-lg" />
         All Products
       </NavLink>
+
       <NavLink
         to="/special-offer"
+        onClick={() => setIsMenuOpen(false)}
         className={({ isActive }) =>
           isActive
-            ? "flex items-center gap-2 text-lime-300 border-b-2 border-lime-300 pb-1"
-            : "flex items-center gap-2 hover:text-lime-300 transition"
+            ? "flex items-center gap-2 border-b-2 border-white pb-1"
+            : "flex items-center gap-2 hover:border-b-2 border-white transition"
         }
       >
         <BiSolidOffer className="text-lg" />
@@ -60,8 +64,8 @@ const Navbar = () => {
         onClick={() => setIsMenuOpen(false)}
         className={({ isActive }) =>
           isActive
-            ? "flex items-center gap-2 text-lime-300 border-b-2 border-lime-300 pb-1"
-            : "flex items-center gap-2 hover:text-lime-300 transition"
+            ? "flex items-center gap-2 border-b-2 border-white pb-1"
+            : "flex items-center gap-2 hover:border-b-2 border-white transition"
         }
       >
         <MdDashboard className="text-xl" />
@@ -71,7 +75,7 @@ const Navbar = () => {
       {user ? (
         <button
           onClick={handleLogout}
-          className="px-4 py-1.5 border border-lime-300 text-lime-200 rounded-full hover:bg-lime-400 hover:text-black transition font-medium"
+          className="px-4 py-1.5 border border-white text-white rounded-full hover:bg-white hover:text-black transition font-medium"
         >
           Logout
         </button>
@@ -80,7 +84,7 @@ const Navbar = () => {
           <NavLink
             to="/login"
             onClick={() => setIsMenuOpen(false)}
-            className="px-4 py-1.5 border border-lime-300 text-lime-200 rounded-full hover:bg-lime-400 hover:text-black transition font-medium"
+            className="px-4 py-1.5 border border-lime-300 text-lime-200 rounded-full hover:bg-[#2563EB] hover:text-black transition font-medium"
           >
             Login
           </NavLink>
@@ -97,27 +101,34 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="sticky top-0 z-50 shadow-xl text-white bg-cover bg-center backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full shadow-xl text-white bg-primary bg-center backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         {/* Brand */}
         <Link
           to="/"
-          className="text-lime-300 font-extrabold text-3xl flex items-center gap-2 drop-shadow-lg"
+          className="font-extrabold text-3xl flex items-center gap-2 drop-shadow-lg"
           onClick={() => setIsMenuOpen(false)}
         >
-          🥬 <span>Raw Market</span>
+          <img
+            src="https://i.ibb.co/3ydHMbsx/Adobe-Express-file.png"
+            className="h-10"
+            alt="Logo"
+          />
+          <span>Raw Market</span>
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-6 text-sm md:text-base font-semibold items-center">
           {menuItems}
+
           {/* Profile Picture */}
           <img
+            onClick={() => setOpenProfile(true)}
             src={
               user?.photoURL || "https://i.ibb.co/5W4fZ0w/default-avatar.jpg"
             }
             alt="User"
-            className="w-9 h-9 rounded-full border-2 border-lime-300 shadow-md"
+            className="w-9 h-9 rounded-full border-2 border-white shadow-md cursor-pointer"
           />
         </div>
 
@@ -160,7 +171,13 @@ const Navbar = () => {
               </div>
 
               {/* Profile */}
-              <div className="flex flex-col items-center gap-2 mb-6">
+              <div
+                className="flex flex-col items-center gap-2 mb-6 cursor-pointer"
+                onClick={() => {
+                  setOpenProfile(true);
+                  setIsMenuOpen(false);
+                }}
+              >
                 <img
                   src={
                     user?.photoURL ||
@@ -169,13 +186,6 @@ const Navbar = () => {
                   alt="User"
                   className="w-20 h-20 rounded-full border-2 border-lime-400 shadow-md"
                 />
-                {user?.displayName && (
-                  <p className="text-lg font-semibold bg-lime-400 text-black p-1 rounded-full">
-                    {user?.email && (
-                      <p className="text-sm text-black">{user.email}</p>
-                    )}
-                  </p>
-                )}
               </div>
 
               {/* Menu Items */}
@@ -186,11 +196,12 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-lime-300 text-black px-4 py-2 rounded-full shadow transition"
-                      : "bg-lime-300 hover:bg-lime-400 text-black  px-4 py-2 rounded-full transition"
+                      : "bg-lime-300 hover:bg-lime-400 text-black px-4 py-2 rounded-full transition"
                   }
                 >
                   🛒 All Products
                 </NavLink>
+
                 <NavLink
                   to="/dashboard"
                   onClick={() => setIsMenuOpen(false)}
@@ -211,7 +222,7 @@ const Navbar = () => {
                     <NavLink
                       to="/login"
                       onClick={() => setIsMenuOpen(false)}
-                      className=" text-black px-4 py-2 rounded-full bg-lime-300 hover:bg-lime-400 transition"
+                      className="text-black px-4 py-2 rounded-full bg-lime-300 hover:bg-lime-400 transition"
                     >
                       Login
                     </NavLink>
@@ -226,11 +237,44 @@ const Navbar = () => {
                 )}
               </nav>
 
-              {/* Footer or space filler */}
+              {/* Footer */}
               <div className="text-center text-xs text-gray-500 mt-6">
                 &copy; 2025 Raw Market
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Profile Sidebar (Top Drawer) */}
+      <AnimatePresence>
+        {openProfile && (
+          <motion.div
+            initial={{ y: "-100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ type: "tween", duration: 0.3 }}
+            className="fixed inset-0  bg-opacity-50 z-50 flex justify-end items-start"
+          >
+            <div className="bg-white w-full md:w-1/2 lg:w-1/3 rounded-b-2xl shadow-lg p-6 relative mt-16">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">Ratul</h2>
+                <button
+                  onClick={() => setOpenProfile(false)}
+                  className="text-gray-500 cursor-pointer hover:text-black"
+                >
+                  ✖
+                </button>
+              </div>
+
+              {/* Static content (later editable form banabi) */}
+              <img src={user.photoURL} alt="" />
+              <p className="text-gray-700">Name: {user.displayName}</p>
+              <p className="text-gray-700">Email: {user.email}</p>
+              <p className="text-gray-700">Role: {user.role}</p>
+              <p className="text-gray-700">Phone Number</p>
+              <p className="text-gray-700">Address</p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

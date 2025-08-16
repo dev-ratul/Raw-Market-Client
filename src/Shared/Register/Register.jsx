@@ -19,7 +19,7 @@ const Register = () => {
 
   
   const onSubmit = (data) => {
-    //console.log("Register Data:", data);
+    console.log("Register Data:", data);
 
     // register
     signUp(data.email, data.password)
@@ -30,6 +30,7 @@ const Register = () => {
         const userInfo={
           email: data.email,
           role: 'user',
+          contactNumber: data.contactNumber,
           create_at: new Date().toISOString(),
           last_at: new Date().toISOString()
         }
@@ -99,6 +100,21 @@ const Register = () => {
               {...register("name", { required: "Name is required" })}
               className="input bg-black input-bordered w-full"
               placeholder="Your name"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+            )}
+          </div>
+          {/* Contact number */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Contact Number
+            </label>
+            <input
+              type="text"
+              {...register("contactNumber", { required: "contactNumber is required" })}
+              className="input bg-black input-bordered w-full"
+              placeholder="Your Contact Number"
             />
             {errors.name && (
               <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>

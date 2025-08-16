@@ -3,13 +3,20 @@ import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 px-4 md:px-10 py-10 text-center lg:text-start mt-20">
+    <footer className="bg-gray-900 text-gray-300 px-4 md:px-10 py-10 text-center lg:text-start ">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
         
         {/* Logo & Website Name */}
         <div className="flex flex-col items-center lg:items-start gap-2">
           
-          <h1 className="text-xl md:text-2xl font-bold text-white">🥬 Raw Market</h1>
+          <h1 className="text-xl flex gap-1 justify-center items-center md:text-2xl font-bold text-white">
+            
+            <img
+              src="https://i.ibb.co/3ydHMbsx/Adobe-Express-file.png"
+              className="h-7"
+              alt=""
+            />
+             Raw Market</h1>
           <p className="text-sm">Your trusted source for local products.</p>
         </div>
 

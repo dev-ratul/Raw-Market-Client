@@ -21,7 +21,7 @@ const MyOrderList = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="bg-base-300 min-h-screen px-4 md:px-10 py-12">
+    <div className="bg-base-300 min-h-screen rounded-2xl px-4 md:px-10 py-12">
       <h2 className="text-white text-3xl md:text-4xl font-bold mb-10 text-center">
         🧾 My Order List
       </h2>

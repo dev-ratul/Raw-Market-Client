@@ -134,7 +134,7 @@ const PaymentFrom = () => {
           disabled={!stripe}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="mt-6 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold py-3 rounded-xl w-full shadow-lg transition-all duration-300"
+          className="mt-6 bg-gradient-to-r cursor-pointer from-purple-500 via-pink-500 to-red-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold py-3 rounded-xl w-full shadow-lg transition-all duration-300"
         >
           Pay ${cost}
         </motion.button>

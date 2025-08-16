@@ -148,7 +148,7 @@ const ViewDetails = () => {
 
   return (
     <div className="min-h-screen bg-black text-white px-4 py-10 flex justify-center items-start">
-      <div className="bg-gray-900 p-6 rounded-xl shadow-2xl w-full max-w-5xl space-y-8">
+      <div className="bg-gray-900 p-10 rounded-xl shadow-2xl w-full max-w-5xl space-y-8">
         {/* Image */}
         <img
           src={product.imageURL}
@@ -302,12 +302,11 @@ const ViewDetails = () => {
             </div>
           ) : selectedDate ? (
             <p className="text-gray-400 mt-4">
-              🕵️‍♂️ কোনো ডেটা পাওয়া যায়নি! অনুগ্রহ করে অন্য তারিখ দিয়ে চেষ্টা
-              করুন।
+              Please compare..
             </p>
           ) : (
             <p className="text-gray-500 mt-4">
-              📅 প্রাইস ট্রেন্ড দেখতে একটি তারিখ নির্বাচন করুন।
+              📅 Pick a date to explore the price trend..
             </p>
           )}
         </div>
