@@ -5,12 +5,25 @@ import { FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import useAuth from "../../hooks/useAuth";
 import { BiSolidOffer } from "react-icons/bi";
+import useAxios from "../../hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const navigate = useNavigate();
+  const axiosInstense = useAxios();
+
+  // users data
+  const { data: usersData = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosInstense.get(`/users/${user.email}`);
+      return res.data;
+    },
+  });
+  console.log(usersData);
 
   // Logout function
   const handleLogout = () => {
@@ -122,14 +135,14 @@ const Navbar = () => {
           {menuItems}
 
           {/* Profile Picture */}
-          <img
-            onClick={() => setOpenProfile(true)}
-            src={
-              user?.photoURL || "https://i.ibb.co/5W4fZ0w/default-avatar.jpg"
-            }
-            alt="User"
-            className="w-9 h-9 rounded-full border-2 border-white shadow-md cursor-pointer"
-          />
+          {user && (
+            <img
+              onClick={() => setOpenProfile(true)}
+              src={user && user.photoURL}
+              alt="User"
+              className="w-9 h-9 rounded-full border-2 border-white shadow-md cursor-pointer"
+            />
+          )}
         </div>
 
         {/* Mobile Hamburger */}
@@ -246,38 +259,87 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      {/* Profile Sidebar (Top Drawer) */}
-      <AnimatePresence>
-        {openProfile && (
-          <motion.div
-            initial={{ y: "-100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "-100%" }}
-            transition={{ type: "tween", duration: 0.3 }}
-            className="fixed inset-0  bg-opacity-50 z-50 flex justify-end items-start"
+     {/* Profile Sidebar (Top Drawer) */}
+<AnimatePresence>
+  {openProfile && (
+    <motion.div
+      initial={{ y: "-100%" }}
+      animate={{ y: 0 }}
+      exit={{ y: "-100%" }}
+      transition={{ type: "tween", duration: 0.3 }}
+      className="fixed inset-0  bg-opacity-40 z-50 flex justify-end items-start"
+    >
+      <div className="bg-white w-full md:w-1/2 lg:w-1/3 rounded-b-2xl shadow-2xl p-6 relative mt-16">
+        
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6 border-b pb-3">
+          <h2 className="text-xl font-bold text-gray-800">Profile</h2>
+          <button
+            onClick={() => setOpenProfile(false)}
+            className="text-gray-500 cursor-pointer hover:text-black transition"
           >
-            <div className="bg-white w-full md:w-1/2 lg:w-1/3 rounded-b-2xl shadow-lg p-6 relative mt-16">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">Ratul</h2>
-                <button
-                  onClick={() => setOpenProfile(false)}
-                  className="text-gray-500 cursor-pointer hover:text-black"
-                >
-                  ✖
-                </button>
-              </div>
+            ✖
+          </button>
+        </div>
 
-              {/* Static content (later editable form banabi) */}
-              <img src={user.photoURL} alt="" />
-              <p className="text-gray-700">Name: {user.displayName}</p>
-              <p className="text-gray-700">Email: {user.email}</p>
-              <p className="text-gray-700">Role: {user.role}</p>
-              <p className="text-gray-700">Phone Number</p>
-              <p className="text-gray-700">Address</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* Profile Image & Basic Info */}
+        <div className="flex flex-col items-center text-center mb-6">
+          <div className="relative">
+            <img
+              src={
+                user?.photoURL ||
+                "https://i.ibb.co/5W4fZ0w/default-avatar.jpg"
+              }
+              alt="Profile"
+              className="w-28 h-28 rounded-full border-4 border-lime-400 shadow-md object-cover"
+            />
+            <span className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
+          </div>
+          <h3 className="mt-3 text-lg font-semibold text-gray-900">
+            {user?.displayName || "User Name"}
+          </h3>
+          <p className="text-sm text-gray-500">{user?.email}</p>
+        </div>
+
+        {/* Details Section */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-xl shadow-sm">
+            <span className="font-medium text-gray-700">Role</span>
+            <span className="text-gray-600">
+              {usersData?.role || "N/A"}
+            </span>
+          </div>
+          <div className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-xl shadow-sm">
+            <span className="font-medium text-gray-700">Phone</span>
+            <span className="text-gray-600">
+              {usersData?.contactNumber || "Not Provided"}
+            </span>
+          </div>
+          <div className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-xl shadow-sm">
+            <span className="font-medium text-gray-700">Address</span>
+            <span className="text-gray-600 text-right">
+              {usersData?.address || "Not Provided"}
+            </span>
+          </div>
+        </div>
+
+        {/* Footer Buttons */}
+        <div className="mt-8 flex gap-3">
+          {/* <button className="w-1/2 py-2 rounded-xl bg-lime-500 text-white font-medium hover:bg-lime-600 transition">
+            Edit Profile
+          </button> */}
+          <button
+            onClick={() => setOpenProfile(false)}
+            className="w-1/2 py-2 cursor-pointer rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-100 transition"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
     </nav>
   );
 };

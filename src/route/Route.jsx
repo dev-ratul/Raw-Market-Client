@@ -30,6 +30,7 @@ import AdminRoute from "./AdminRoute";
 import TomatoTrends from "../Dashboard/ShowPriceTrendLayout/TomatoTrends/TomatoTrends";
 import AddSpecialOffer from "../Dashboard/AdminDashboard/AddSpecialOffer/AddSpecialOffer";
 import SpecialOffer from "../Shared/SpecialOffer/SpecialOffer";
+import OverView from "../Dashboard/OverView/OverView";
 
 export const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        index: true,
+        Component: OverView
+      },
       {
         path: "add-product",
         Component: AddProduct,

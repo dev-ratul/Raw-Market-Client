@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import useAxios from "../../hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
 
 const Register = () => {
   const [profilePicture, setProfilePicture]= useState("")
@@ -17,6 +18,15 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const {data}= useQuery({
+    queryKey: ['users'],
+    queryFn: async ()=>{
+      const res=await axiosInstense.get('/users/rat2@gmail.com')
+      return res.data;
+    }
+  })
+  console.log(data)
+
   
   const onSubmit = (data) => {
     console.log("Register Data:", data);
@@ -29,6 +39,7 @@ const Register = () => {
 
         const userInfo={
           email: data.email,
+          address: data.address,
           role: 'user',
           contactNumber: data.contactNumber,
           create_at: new Date().toISOString(),
@@ -36,7 +47,7 @@ const Register = () => {
         }
 
         const userRes= await axiosInstense.post('/users', userInfo)
-        //console.log(userRes.data)
+        console.log(userRes.data)
 
 
         const profileInfo = {
@@ -105,6 +116,7 @@ const Register = () => {
               <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
             )}
           </div>
+
           {/* Contact number */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -118,6 +130,22 @@ const Register = () => {
             />
             {errors.name && (
               <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+            )}
+          </div>
+
+          {/* Address */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Address
+            </label>
+            <input
+              type="text"
+              {...register("address", { required: "address is required" })}
+              className="input bg-black input-bordered w-full"
+              placeholder="Your address"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>
             )}
           </div>
 
