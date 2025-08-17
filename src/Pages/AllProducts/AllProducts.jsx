@@ -73,7 +73,7 @@ const AllProducts = () => {
             <input
               type="date"
               {...register("from", { required: true })}
-              className="input input-bordered"
+              className="input input-bordered "
             />
           </div>
           <div>
@@ -81,10 +81,10 @@ const AllProducts = () => {
             <input
               type="date"
               {...register("to", { required: true })}
-              className="input input-bordered"
+              className="input input-bordered "
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary text-white">
             Filter
           </button>
           <select
@@ -92,7 +92,7 @@ const AllProducts = () => {
             value={sort}
             className="select select-bordered"
           >
-            <option value="">Sort by Price</option>
+            <option value="" className="">Sort by Price</option>
             <option value="asc">🔼 Low to High</option>
             <option value="desc">🔽 High to Low</option>
           </select>
@@ -108,8 +108,7 @@ const AllProducts = () => {
                 data.products.map((p) => (
                   <div
                     key={p._id}
-                    className="bg-opacity-10 backdrop-blur-md rounded-3xl border border-white border-opacity-20 shadow-lg shadow-blue-300
-                  hover:shadow-blue-400 hover:scale-105 transition-transform duration-500 cursor-pointer flex flex-col"
+                    className="bg-opacity-10 backdrop-blur-md rounded-3xl   bg-gray-50 dark:bg-gray-900   shadow-lg hover:shadow-blue-50 hover:scale-105 transition-transform duration-500 cursor-pointer flex flex-col"
                     onClick={() => handleViewDetails(p._id)}
                     role="button"
                     tabIndex={0}
@@ -117,7 +116,7 @@ const AllProducts = () => {
                       if (e.key === "Enter") handleViewDetails(p._id);
                     }}
                   >
-                    <div className="relative h-64 overflow-hidden rounded-t-3xl border-b border-white border-opacity-30">
+                    <div className="relative h-64 text-white overflow-hidden rounded-t-3xl ">
                       <img
                         src={p.imageURL}
                         alt={p.itemName}

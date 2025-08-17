@@ -209,14 +209,14 @@ const ViewDetails = () => {
           {role !== "admin" && role !== "vendor" && (
             <button
               onClick={() => watchlistMutation.mutate()}
-              className="btn bg-blue-600 hover:bg-blue-700 text-white"
+              className="btn bg-blue-600 border-none hover:bg-blue-700 text-white"
             >
               ⭐ Add to Watchlist
             </button>
           )}
           <button
             onClick={() => paymentMutation(product)}
-            className="btn bg-green-600 hover:bg-green-700 text-white"
+            className="btn bg-green-600 border-none hover:bg-green-700 text-white"
           >
             🛒 Buy Product
           </button>
@@ -230,12 +230,12 @@ const ViewDetails = () => {
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="input text-black input-bordered"
+              className="input text-black bg-white input-bordered"
               max={new Date().toISOString().split("T")[0]}
             />
             <button
               onClick={handleCompare}
-              className="btn bg-cyan-600 text-white"
+              className="btn bg-primary border-none text-white"
             >
               Compare
             </button>
@@ -321,12 +321,12 @@ const ViewDetails = () => {
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                className="textarea text-black dark:text-white textarea-bordered w-full"
+                className="textarea text-black bg-white textarea-bordered w-full"
 
                 placeholder="Write your comment..."
                 required
               />
-              <button type="submit" className="btn bg-purple-600 text-white">
+              <button type="submit" className="btn bg-primary text-white">
                 Submit Review
               </button>
             </form>

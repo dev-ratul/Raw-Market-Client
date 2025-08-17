@@ -97,14 +97,14 @@ const Navbar = () => {
           <NavLink
             to="/login"
             onClick={() => setIsMenuOpen(false)}
-            className="px-4 py-1.5 border border-lime-300 text-lime-200 rounded-full hover:bg-[#2563EB] hover:text-black transition font-medium"
+            className="px-4 py-1.5 border border-white text-white rounded-full hover:bg-[#2563EB] hover:text-black transition font-medium"
           >
             Login
           </NavLink>
           <NavLink
             to="/register"
             onClick={() => setIsMenuOpen(false)}
-            className="px-4 py-1.5 bg-lime-400 text-black rounded-full hover:bg-lime-500 transition font-medium"
+            className="px-4 py-1.5 bg-white text-gray-600 hover:text-gray-900 rounded-full  transition font-medium"
           >
             Sign Up
           </NavLink>
@@ -114,7 +114,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="sticky top-0 z-50 w-full shadow-xl text-white bg-primary bg-center backdrop-blur-md">
+    <nav className="sticky absolute top-0 z-50 w-full shadow-xl text-white bg-primary bg-center backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         {/* Brand */}
         <Link

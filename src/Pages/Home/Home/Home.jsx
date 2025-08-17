@@ -7,6 +7,7 @@ import MarketTips from '../MarketTips/MarketTips';
 import HomeSpecialOffer from '../HomeSpecialOffer/HomeSpecialOffer';
 import AllReviewSec from '../reviewSection/AllReviewSec';
 import OurPartner from '../OurPartner/OurPartner';
+import ContactUs from '../ContactUs/ContactUs';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -56,8 +57,20 @@ const Home = () => {
         viewport={{ once: true, amount: 0.3 }}
         key="advertisement"
       >
+        <ContactUs></ContactUs>
+      </motion.div>
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        key="advertisement"
+      >
         <HomeSpecialOffer></HomeSpecialOffer>
       </motion.div>
+      
+      
 
       
 

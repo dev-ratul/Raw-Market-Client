@@ -5,6 +5,10 @@ import useAuth from "../../hooks/useAuth";
 import { Link, useNavigate } from "react-router";
 import useUserRole from "../../hooks/useUserRole";
 import Loading from "../../Shared/Loading/Loading";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const OverView = () => {
   const axiosSecure = useAxiosSecure();
@@ -47,11 +51,7 @@ const OverView = () => {
       return res.data;
     },
   });
-
-  const handleRemove = (id) => {
-    // handle watchlist remove function
-    console.log("Remove item", id);
-  };
+  console.log(watchlist);
 
   //   vendor
 
@@ -77,18 +77,90 @@ const OverView = () => {
 
   // admin
 
-  const { data , isPending } = useQuery({
+  // শুধু admin হলে query চালাও
+  const { data, isLoading } = useQuery({
     queryKey: ["all-payment-history"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/all-payment-history`);
-      return res.data;
+      if (role == "admin") {
+        const res = await axiosSecure.get("/all-payment-history");
+        return res.data;
+      } else {
+        return []; // admin না হলে খালি array return করো
+      }
     },
+    enabled: role == "admin", // এটা query শুধু admin হলে চালাবে
   });
-  //console.log(history);
 
-  if (isPending) {
+  if (isLoading) {
     return <Loading />;
   }
+
+  // user chart
+
+  // Market-wise amount calculate করা
+  const marketData = history.reduce((acc, item) => {
+    if (acc[item.marketName]) {
+      acc[item.marketName] += item.amount;
+    } else {
+      acc[item.marketName] = item.amount;
+    }
+    return acc;
+  }, {});
+
+  const chartData = {
+    labels: Object.keys(marketData),
+    datasets: [
+      {
+        label: "Amount Spent",
+        data: Object.values(marketData),
+        backgroundColor: [
+          "#4ade80", // green
+          "#60a5fa", // blue
+          "#facc15", // yellow
+          "#f87171", // red
+          "#a78bfa", // purple
+        ],
+        borderColor: "#1f2937",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const WatchlistChart = ({ watchlist }) => {
+    if (!watchlist || watchlist.length === 0) {
+      return (
+        <div className="bg-gray-900 rounded-xl shadow-sm p-6 text-center text-white">
+          <h2 className="text-xl font-semibold mb-4">My Watchlist</h2>
+          <p className="text-gray-400">Your watchlist is empty.</p>
+        </div>
+      );
+    }
+
+    // Market-wise product count calculate
+    const marketCount = watchlist.reduce((acc, item) => {
+      acc[item.marketName] = (acc[item.marketName] || 0) + 1;
+      return acc;
+    }, {});
+
+    const chartData = {
+      labels: Object.keys(marketCount),
+      datasets: [
+        {
+          label: "Products Count",
+          data: Object.values(marketCount),
+          backgroundColor: [
+            "#4ade80",
+            "#60a5fa",
+            "#facc15",
+            "#f87171",
+            "#a78bfa",
+          ],
+          borderColor: "#1f2937",
+          borderWidth: 1,
+        },
+      ],
+    };
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 space-y-10">
@@ -121,93 +193,59 @@ const OverView = () => {
 
       {/* user-role */}
       {role == "user" && (
-        <div>
+        <div className="flex justify-center items-center gap-10">
           {/* Payment History Table */}
-          <div className="bg-gray-900 rounded-xl shadow-sm p-6 overflow-x-auto">
-            <h2 className="text-xl font-semibold text-white mb-4">
-              Payment History
-            </h2>
+
+          <div className="bg-gray-900 w-full h-full rounded-xl shadow-sm p-6 text-white">
+            <h2 className="text-xl font-semibold mb-4">Payment Distribution</h2>
             {history.length === 0 ? (
               <p className="text-gray-500 text-center">
                 No payment history found.
               </p>
             ) : (
-              <table className="min-w-full text-left border-collapse">
-                <thead className="bg-gray-200 text-gray-700">
-                  <tr>
-                    <th className="px-4 py-3">#</th>
-                    <th className="px-4 py-3">Product</th>
-                    <th className="px-4 py-3">Market</th>
-                    <th className="px-4 py-3">Price</th>
-                    <th className="px-4 py-3">Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {history.map((item, index) => (
-                    <tr
-                      key={item._id}
-                      className="hover:bg-[#1f2937] transition duration-200"
-                    >
-                      <td className="px-4 py-3">{index + 1}</td>
-                      <td className="px-4 py-3 font-medium">
-                        {item.productName}
-                      </td>
-                      <td className="px-4 py-3">{item.marketName}</td>
-                      <td className="px-4 py-3">$ {item.amount}</td>
-                      <td className="px-4 py-3">
-                        {item.paid_at_string
-                          ? new Date(item.paid_at_string).toLocaleDateString()
-                          : "N/A"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <Pie data={chartData} />
             )}
           </div>
 
           {/* Watchlist Table */}
 
-          <div className="bg-gray-900 rounded-xl shadow-sm p-6 my-10 overflow-x-auto">
+          <div className="bg-gray-900 w-full h-full  rounded-xl shadow-sm p-6">
             <h2 className="text-xl font-semibold text-white mb-4">
-              Your Watchlist
+              My Watchlist
             </h2>
             {watchlist.length === 0 ? (
               <p className="text-gray-500 text-center">
                 Your watchlist is empty.
               </p>
             ) : (
-              <table className="min-w-full text-left border-collapse">
-                <thead className="bg-gray-200 text-gray-700">
-                  <tr>
-                    <th className="px-4 py-3">#</th>
-                    <th className="px-4 py-3">Product</th>
-                    <th className="px-4 py-3">Market</th>
-                    <th className="px-4 py-3">Price</th>
-                    <th className="px-4 py-3">Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {watchlist.map((item, index) => (
-                    <tr
-                      key={item._id}
-                      className="hover:bg-[#1f2937] transition duration-200"
-                    >
-                      <td className="px-4 py-3">{index + 1}</td>
-                      <td className="px-4 py-3 font-medium">{item.itemName}</td>
-                      <td className="px-4 py-3">{item.marketName}</td>
-                      <td className="px-4 py-3">
-                        ${item.pricePerUnit || "N/A"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {item.date
-                          ? new Date(item.date).toLocaleDateString()
-                          : "N/A"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              (() => {
+                // Market-wise product count calculate
+                const marketCount = watchlist.reduce((acc, item) => {
+                  acc[item.pricePerUnit] = (acc[item.pricePerUnit] || 0) + 1;
+                  return acc;
+                }, {});
+
+                const chartData = {
+                  labels: Object.keys(marketCount),
+                  datasets: [
+                    {
+                      label: "Products Count",
+                      data: Object.values(marketCount),
+                      backgroundColor: [
+                        "#4ade80",
+                        "#60a5fa",
+                        "#facc15",
+                        "#f87171",
+                        "#a78bfa",
+                      ],
+                      borderColor: "#1f2937",
+                      borderWidth: 1,
+                    },
+                  ],
+                };
+
+                return <Pie data={chartData} />;
+              })()
             )}
           </div>
         </div>
@@ -215,196 +253,123 @@ const OverView = () => {
 
       {/* vendor */}
       {role === "vendor" && (
-        <div className="space-y-8">
-          {/* Advertisement Section */}
-          <div className="p-5 rounded-2xl bg-base-300 shadow-md">
+        <div className="space-y-8 flex flex-col md:flex-row md:gap-10">
+          <div className="p-5 h-full w-full rounded-2xl bg-base-300 shadow-md">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Your Advertisements
             </h2>
 
-            {/* Table for medium and up screens */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="table w-full">
-                <thead className="bg-base-200">
-                  <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {advertisement.map((ad) => (
-                    <tr key={ad._id} className="hover:bg-base-100">
-                      <td className="font-medium">{ad.title}</td>
-                      <td>{ad.description.slice(0, 50)}...</td>
-                      <td>
-                        <span
-                          className={`badge ${
-                            ad.status === "approved"
-                              ? "badge-success"
-                              : "badge-warning"
-                          }`}
-                        >
-                          {ad.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            {advertisement.length === 0 ? (
+              <p className="text-gray-500 text-center">
+                No advertisements found.
+              </p>
+            ) : (
+              (() => {
+                // Status-wise count calculate
+                const statusCount = advertisement.reduce((acc, ad) => {
+                  acc[ad.status] = (acc[ad.status] || 0) + 1;
+                  return acc;
+                }, {});
 
-            {/* Card view for mobile screens */}
-            <div className="grid gap-4 md:hidden">
-              {advertisement.map((ad) => (
-                <div
-                  key={ad._id}
-                  className="bg-base-100 p-4 rounded-xl shadow-sm"
-                >
-                  <h3 className="text-lg font-semibold mb-2">{ad.title}</h3>
-                  <p className="text-sm text-gray-600 mb-3">
-                    {ad.description.slice(0, 80)}...
-                  </p>
-                  <span
-                    className={`badge ${
-                      ad.status === "approved"
-                        ? "badge-success"
-                        : "badge-warning"
-                    }`}
-                  >
-                    {ad.status}
-                  </span>
-                </div>
-              ))}
-            </div>
+                const chartData = {
+                  labels: Object.keys(statusCount),
+                  datasets: [
+                    {
+                      label: "Advertisement Status",
+                      data: Object.values(statusCount),
+                      backgroundColor: ["#4ade80", "#facc15", "#f87171"],
+                      borderColor: "#1f2937",
+                      borderWidth: 1,
+                    },
+                  ],
+                };
+
+                return <Pie data={chartData} />;
+              })()
+            )}
           </div>
 
           {/* Products Section */}
-          <div className="p-5 rounded-2xl bg-base-300 shadow-md">
+          <div className="p-5 rounded-2xl h-full w-full bg-base-300 shadow-md">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Your Products
             </h2>
 
-            {/* Table for medium and up screens */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="table w-full">
-                <thead>
-                  <tr className="bg-base-200 text-base font-semibold">
-                    <th>Item Name</th>
-                    <th>Price/Unit</th>
-                    <th>Market</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product) => (
-                    <tr key={product._id} className="hover:bg-base-100">
-                      <td className="font-medium">{product.itemName}</td>
-                      <td>৳{product.pricePerUnit}</td>
-                      <td>{product.marketName}</td>
-                      <td>{new Date(product.date).toLocaleDateString()}</td>
-                      <td>
-                        <div className="flex items-center gap-2 flex-col sm:flex-row">
-                          <span
-                            className={`px-3 py-1 text-xs rounded-full font-semibold ${
-                              product.status === "pending"
-                                ? "bg-yellow-200 text-yellow-800"
-                                : product.status === "approved"
-                                ? "bg-green-500 text-white"
-                                : "bg-red-200 text-red-800"
-                            }`}
-                          >
-                            {product.status.toUpperCase()}
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            {products.length === 0 ? (
+              <p className="text-gray-500 text-center">No products found.</p>
+            ) : (
+              (() => {
+                // Status-wise product count calculate
+                const statusCount = products.reduce((acc, product) => {
+                  acc[product.status] = (acc[product.status] || 0) + 1;
+                  return acc;
+                }, {});
 
-            {/* Card view for mobile screens */}
-            <div className="grid gap-4 md:hidden">
-              {products.map((product) => (
-                <div
-                  key={product._id}
-                  className="bg-base-100 p-4 rounded-xl shadow-sm"
-                >
-                  <h3 className="text-lg font-semibold mb-2">
-                    {product.itemName}
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-1">
-                    Price: ৳{product.pricePerUnit}
-                  </p>
-                  <p className="text-sm text-gray-600 mb-1">
-                    Market: {product.marketName}
-                  </p>
-                  <p className="text-sm text-gray-600 mb-2">
-                    Date: {new Date(product.date).toLocaleDateString()}
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`px-3 py-1 text-xs rounded-full font-semibold ${
-                        product.status === "pending"
-                          ? "bg-yellow-200 text-yellow-800"
-                          : product.status === "approved"
-                          ? "bg-green-500 text-white"
-                          : "bg-red-200 text-red-800"
-                      }`}
-                    >
-                      {product.status.toUpperCase()}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+                const chartData = {
+                  labels: Object.keys(statusCount),
+                  datasets: [
+                    {
+                      label: "Product Status",
+                      data: Object.values(statusCount),
+                      backgroundColor: ["#4ade80", "#facc15", "#f87171"], // approved, pending, rejected
+                      borderColor: "#1f2937",
+                      borderWidth: 1,
+                    },
+                  ],
+                };
+
+                return <Pie data={chartData} />;
+              })()
+            )}
           </div>
         </div>
       )}
 
       {/* admin */}
 
-      {
-        role == 'admin' && 
-        <div>
-          <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-700">
-        <table className="table table-zebra text-sm w-full">
-          <thead className="bg-gray-900 text-white">
-            <tr>
-              <th>#</th>
-              <th>Product Name</th>
-              <th>Buyer Email</th>
-              <th>Price</th>
-              <th>Transaction ID</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={item._id}>
-                <td>{index + 1}</td>
-                <td>{item.productName}</td>
-                <td>{item.email}</td>
-                <td>${item.amount}</td>
-                <td className="text-xs break-all">{item.transactionId}</td>
-                <td>
-                  {new Date(item.paid_at_string).toLocaleString("en-GB", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {role == "admin" && (
+        // Payment history chart section
+        <div className="p-5 rounded-2xl h-[8] w-full bg-gray-900 shadow-md">
+          <h2 className="text-xl font-semibold text-white mb-4">
+            Product-wise Sales Distribution
+          </h2>
+
+          {data.length === 0 ? (
+            <p className="text-gray-400 text-center">No sales data found.</p>
+          ) : (
+            (() => {
+              // Product-wise total amount calculate
+              const productAmount = data.reduce((acc, item) => {
+                acc[item.productName] =
+                  (acc[item.productName] || 0) + item.amount;
+                return acc;
+              }, {});
+
+              const chartData = {
+                labels: Object.keys(productAmount),
+                datasets: [
+                  {
+                    label: "Total Amount",
+                    data: Object.values(productAmount),
+                    backgroundColor: [
+                      "#4ade80", // green
+                      "#60a5fa", // blue
+                      "#facc15", // yellow
+                      "#f87171", // red
+                      "#a78bfa", // purple
+                      "#f472b6", // pink
+                    ],
+                    borderColor: "#1f2937",
+                    borderWidth: 1,
+                  },
+                ],
+              };
+
+              return <Pie className="h-[70vh]" data={chartData} />;
+            })()
+          )}
         </div>
-      }
+      )}
     </div>
   );
 };
