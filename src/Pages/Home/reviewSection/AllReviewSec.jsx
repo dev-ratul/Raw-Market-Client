@@ -16,7 +16,7 @@ const AllReviewSec = () => {
 
   return (
     <div className="my-10 max-w-7xl mx-auto px-4">
-      <h2 className="text-3xl font-bold text-center text-primary mb-6">
+      <h2 className="text-3xl font-bold text-center text-secondary mb-6">
         What Our Customers Say
       </h2>
 

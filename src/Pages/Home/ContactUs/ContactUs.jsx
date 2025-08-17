@@ -36,7 +36,10 @@ export default function ContactUs() {
       // 👉 Replace this block with your real API call (axios/fetch)
       await new Promise((r) => setTimeout(r, 900));
       console.log("Contact form submission:", form);
-      setStatus({ type: "success", message: "Thanks! We'll get back to you soon." });
+      setStatus({
+        type: "success",
+        message: "Thanks! We'll get back to you soon.",
+      });
       setForm({
         name: "",
         email: "",
@@ -47,7 +50,10 @@ export default function ContactUs() {
         consent: false,
       });
     } catch (err) {
-      setStatus({ type: "error", message: "Something went wrong. Please try again." });
+      setStatus({
+        type: "error",
+        message: "Something went wrong. Please try again.",
+      });
     }
   };
 
@@ -84,20 +90,43 @@ export default function ContactUs() {
               <span className="text-white/90">Contact us</span>
             </h1>
             <p className="mt-4 max-w-prose text-white/80">
-              Tell us a bit about your question. Our support team will reach out as soon as possible.
-              For urgent matters, consider using the phone field.
+              Tell us a bit about your question. Our support team will reach out
+              as soon as possible. For urgent matters, consider using the phone
+              field.
             </p>
 
             <ul className="mt-6 space-y-3 text-white/80">
               <li className="flex items-center gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18a2 2 0 002-2V8a2 2 0 00-2-2H3a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18a2 2 0 002-2V8a2 2 0 00-2-2H3a2 2 0 00-2 2v6a2 2 0 002 2z"
+                  />
                 </svg>
                 support@example.com
               </li>
               <li className="flex items-center gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2 8.5C2 5.462 4.462 3 7.5 3h9A5.5 5.5 0 0122 8.5V16a5 5 0 01-5 5H7a5 5 0 01-5-5V8.5z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M2 8.5C2 5.462 4.462 3 7.5 3h9A5.5 5.5 0 0122 8.5V16a5 5 0 01-5 5H7a5 5 0 01-5-5V8.5z"
+                  />
                 </svg>
                 Live chat: 10am–6pm (GMT+6)
               </li>
@@ -105,11 +134,14 @@ export default function ContactUs() {
           </div>
 
           {/* Right: Form card */}
-          <div className="rounded-2xl border border-white/20 bg-white/80 p-6 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/80 md:p-8">
+          <div className="rounded-2xl border border-white/20  p-6 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/80 md:p-8">
             <form onSubmit={onSubmit} noValidate className="space-y-5">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-800 dark:text-gray-200">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+                  >
                     Full name
                   </label>
                   <input
@@ -125,7 +157,10 @@ export default function ContactUs() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-800 dark:text-gray-200">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+                  >
                     Email address
                   </label>
                   <input
@@ -144,7 +179,10 @@ export default function ContactUs() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-800 dark:text-gray-200">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+                  >
                     Phone (optional)
                   </label>
                   <input
@@ -158,7 +196,10 @@ export default function ContactUs() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="topic" className="block text-sm font-medium text-gray-800 dark:text-gray-200">
+                  <label
+                    htmlFor="topic"
+                    className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+                  >
                     Topic
                   </label>
                   <select
@@ -177,7 +218,10 @@ export default function ContactUs() {
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-800 dark:text-gray-200">
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+                >
                   Subject
                 </label>
                 <input
@@ -194,7 +238,10 @@ export default function ContactUs() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-800 dark:text-gray-200">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-gray-800 dark:text-gray-200"
+                >
                   Message
                 </label>
                 <textarea
@@ -221,29 +268,53 @@ export default function ContactUs() {
                   required
                   aria-required
                 />
-                <label htmlFor="consent" className="text-sm text-gray-700 dark:text-gray-300">
+                <label
+                  htmlFor="consent"
+                  className="text-sm text-gray-700 dark:text-gray-300"
+                >
                   I agree to be contacted regarding my inquiry.
                 </label>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 ">
                 <button
                   type="submit"
                   disabled={status.type === "loading"}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-indigo-600 px-5 py-3 text-white shadow-lg transition hover:brightness-110 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:cursor-not-allowed disabled:opacity-80 dark:bg-indigo-500"
+                  className="inline-flex cursor-pointer w-full items-center justify-center gap-2 rounded-2xl bg-indigo-600 px-5 py-3 text-white shadow-lg transition hover:brightness-110 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:cursor-not-allowed disabled:opacity-80 dark:bg-indigo-500"
                   aria-busy={status.type === "loading"}
                 >
                   {status.type === "loading" ? (
                     <>
-                      <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                      <svg
+                        className="h-5 w-5 animate-spin"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                        ></path>
                       </svg>
                       Sending...
                     </>
                   ) : (
                     <>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="h-5 w-5 c"
+                      >
                         <path d="M2.3 2.3a1 1 0 011.06-.22l18 7a1 1 0 010 1.86l-7.53 3.01-3 7.53a1 1 0 01-1.86 0l-7-18a1 1 0 01.33-1.18zM6.2 7.8l5.9 5.9 6.4-2.56-12.3-4.94zm5.05 7.75l1.77 1.77-2.9 7.28 1.13-9.05z" />
                       </svg>
                       Send message

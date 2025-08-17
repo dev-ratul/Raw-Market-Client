@@ -31,6 +31,7 @@ import TomatoTrends from "../Dashboard/ShowPriceTrendLayout/TomatoTrends/TomatoT
 import AddSpecialOffer from "../Dashboard/AdminDashboard/AddSpecialOffer/AddSpecialOffer";
 import SpecialOffer from "../Shared/SpecialOffer/SpecialOffer";
 import OverView from "../Dashboard/OverView/OverView";
+import Support from "../Pages/Support/Support";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: "all-products",
         Component: AllProducts,
+      },
+      {
+        path: "/support",
+        Component: Support
       },
       {
         path: "/all-products/:id",

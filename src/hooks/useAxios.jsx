@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstanse= axios.create({
-    baseURL: 'https://raw-market-server.vercel.app/'
+    baseURL: 'http://localhost:3000/'
 })
 
 const useAxios=()=>{
@@ -9,3 +9,5 @@ const useAxios=()=>{
 }
 
 export default useAxios;
+
+// https://raw-market-server.vercel.app/

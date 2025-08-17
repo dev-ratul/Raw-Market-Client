@@ -10,13 +10,13 @@
   name: "dark";
   default: true;
  --color-primary: #2563EB;
-  --color-secondary: teal;
+  --color-secondary: white;
 } 
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
   --color-primary: #0ABAB5;
-  --color-secondary: yellow;
+  --color-secondary: black;
 } 
 
 

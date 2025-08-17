@@ -32,7 +32,7 @@ const HomeProductSec = () => {
 
   return (
     <section className="max-w-7xl mx-auto px-4 mb-12">
-  <h2 className="md:text-4xl font-extrabold text-center mb-10 py-5 text-primary ">
+  <h2 className="md:text-4xl font-extrabold text-center mb-10 py-5 text-secondary ">
     🛍️ Stay Updated with Local Market Prices
   </h2>
 

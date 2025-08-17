@@ -193,7 +193,7 @@ const OverView = () => {
 
       {/* user-role */}
       {role == "user" && (
-        <div className="flex justify-center items-center gap-10">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-10">
           {/* Payment History Table */}
 
           <div className="bg-gray-900 w-full h-full rounded-xl shadow-sm p-6 text-white">
@@ -329,46 +329,74 @@ const OverView = () => {
 
       {role == "admin" && (
         // Payment history chart section
-        <div className="p-5 rounded-2xl h-[8] w-full bg-gray-900 shadow-md">
-          <h2 className="text-xl font-semibold text-white mb-4">
-            Product-wise Sales Distribution
-          </h2>
+        <div className="p-5 rounded-2xl bg-gray-900 shadow-md max-w-4xl mx-auto">
+  <h2 className="text-xl font-semibold text-white mb-4 text-center">
+    Product-wise Sales Distribution
+  </h2>
 
-          {data.length === 0 ? (
-            <p className="text-gray-400 text-center">No sales data found.</p>
-          ) : (
-            (() => {
-              // Product-wise total amount calculate
-              const productAmount = data.reduce((acc, item) => {
-                acc[item.productName] =
-                  (acc[item.productName] || 0) + item.amount;
-                return acc;
-              }, {});
+  {data.length === 0 ? (
+    <p className="text-gray-400 text-center">No sales data found.</p>
+  ) : (
+    (() => {
+      // Product-wise total amount calculate
+      const productAmount = data.reduce((acc, item) => {
+        acc[item.productName] = (acc[item.productName] || 0) + item.amount;
+        return acc;
+      }, {});
 
-              const chartData = {
-                labels: Object.keys(productAmount),
-                datasets: [
-                  {
-                    label: "Total Amount",
-                    data: Object.values(productAmount),
-                    backgroundColor: [
-                      "#4ade80", // green
-                      "#60a5fa", // blue
-                      "#facc15", // yellow
-                      "#f87171", // red
-                      "#a78bfa", // purple
-                      "#f472b6", // pink
-                    ],
-                    borderColor: "#1f2937",
-                    borderWidth: 1,
-                  },
-                ],
-              };
+      const chartData = {
+        labels: Object.keys(productAmount),
+        datasets: [
+          {
+            label: "Total Amount",
+            data: Object.values(productAmount),
+            backgroundColor: [
+              "#4ade80",
+              "#60a5fa",
+              "#facc15",
+              "#f87171",
+              "#a78bfa",
+              "#f472b6",
+              "#22d3ee",
+            ],
+            borderColor: "#1f2937",
+            borderWidth: 1,
+          },
+        ],
+      };
 
-              return <Pie className="h-[70vh]" data={chartData} />;
-            })()
-          )}
+      const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: {
+              color: "white",
+              font: {
+                size: 14,
+              },
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `$${context.formattedValue}`;
+              },
+            },
+          },
+        },
+      };
+
+      return (
+        <div className="relative h-80">
+          <Pie data={chartData} options={options} />
         </div>
+      );
+    })()
+  )}
+</div>
+
       )}
     </div>
   );

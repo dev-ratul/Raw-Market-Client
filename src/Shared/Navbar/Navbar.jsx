@@ -73,6 +73,19 @@ const Navbar = () => {
       </NavLink>
 
       <NavLink
+        to="/support"
+        onClick={() => setIsMenuOpen(false)}
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center gap-2 border-b-2 border-white pb-1"
+            : "flex items-center gap-2 hover:border-b-2 border-white transition"
+        }
+      >
+        <BiSolidOffer className="text-lg" />
+        Support
+      </NavLink>
+
+      <NavLink
         to="/dashboard"
         onClick={() => setIsMenuOpen(false)}
         className={({ isActive }) =>

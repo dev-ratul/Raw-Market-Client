@@ -29,7 +29,7 @@ const HomeSpecialOffers = () => {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-12  rounded-lg ">
-      <h2 className="text-4xl font-extrabold text-center text-primary mb-12 tracking-wide drop-shadow-md">
+      <h2 className="text-4xl font-extrabold text-center text-secondary mb-12 tracking-wide drop-shadow-md">
         📢 Today's Special Offers
       </h2>
 

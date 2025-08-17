@@ -47,7 +47,7 @@ const HomeAdvertisement = () => {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 my-16">
       {/* Section Title */}
       <div className="text-center mb-10 px-2 sm:px-6">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-primary">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary">
           Advertisement Highlights
         </h2>
       
