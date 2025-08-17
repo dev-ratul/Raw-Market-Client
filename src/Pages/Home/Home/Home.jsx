@@ -5,6 +5,8 @@ import HomeProductSec from '../HomeProductSec/HomeProductSec';
 import HomeAdvertisement from '../HomeAdvertisement/HomeAdvertisement';
 import MarketTips from '../MarketTips/MarketTips';
 import HomeSpecialOffer from '../HomeSpecialOffer/HomeSpecialOffer';
+import AllReviewSec from '../reviewSection/AllReviewSec';
+import OurPartner from '../OurPartner/OurPartner';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -57,6 +59,18 @@ const Home = () => {
         <HomeSpecialOffer></HomeSpecialOffer>
       </motion.div>
 
+      
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        key="advertisement"
+      >
+        <OurPartner></OurPartner>
+      </motion.div>
+
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -65,6 +79,16 @@ const Home = () => {
         key="advertisement"
       >
         <MarketTips></MarketTips>
+      </motion.div>
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        key="advertisement"
+      >
+        <AllReviewSec></AllReviewSec>
       </motion.div>
 
 

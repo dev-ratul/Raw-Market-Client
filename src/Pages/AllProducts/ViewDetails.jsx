@@ -147,7 +147,7 @@ const ViewDetails = () => {
   if (loadingProduct) return <Loading />;
 
   return (
-    <div className="min-h-screen bg-black text-white px-4 py-10 flex justify-center items-start">
+    <div className="min-h-screen  text-white px-4 py-10 flex justify-center items-start">
       <div className="bg-gray-900 p-10 rounded-xl shadow-2xl w-full max-w-5xl space-y-8">
         {/* Image */}
         <img
@@ -230,7 +230,7 @@ const ViewDetails = () => {
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="input input-bordered"
+              className="input text-black input-bordered"
               max={new Date().toISOString().split("T")[0]}
             />
             <button
@@ -321,7 +321,8 @@ const ViewDetails = () => {
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                className="textarea textarea-bordered w-full"
+                className="textarea text-black dark:text-white textarea-bordered w-full"
+
                 placeholder="Write your comment..."
                 required
               />

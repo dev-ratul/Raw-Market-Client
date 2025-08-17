@@ -32,18 +32,18 @@ const HomeProductSec = () => {
 
   return (
     <section className="max-w-7xl mx-auto px-4 mb-12">
-  <h2 className="text-4xl font-extrabold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 text-white">
+  <h2 className="md:text-4xl font-extrabold text-center mb-10 py-5 text-primary ">
     🛍️ Stay Updated with Local Market Prices
   </h2>
 
-  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+  <div className="grid md:grid-cols-2  lg:grid-cols-3 gap-10">
     {products.map((product, index) => (
       <motion.div
         key={product._id}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: index * 0.1 }}
-        className="flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+        className="flex flex-col  bg-gray-50 rounded-3xl overflow-hidden border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
       >
         {/* Image */}
         <div className="relative group overflow-hidden">

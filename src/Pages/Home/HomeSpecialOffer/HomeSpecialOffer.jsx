@@ -28,8 +28,8 @@ const HomeSpecialOffers = () => {
     );
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-12  rounded-lg shadow-lg">
-      <h2 className="text-4xl font-extrabold text-center text-white mb-12 tracking-wide drop-shadow-md">
+    <section className="max-w-7xl mx-auto px-6 py-12  rounded-lg ">
+      <h2 className="text-4xl font-extrabold text-center text-primary mb-12 tracking-wide drop-shadow-md">
         📢 Today's Special Offers
       </h2>
 
@@ -37,24 +37,24 @@ const HomeSpecialOffers = () => {
         {offers.map((offer) => (
           <article
             key={offer._id}
-            className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-transform duration-300 border border-green-200 overflow-hidden"
+            className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-transform duration-300  overflow-hidden"
           >
             <img
               src={offer.image}
               alt={offer.title}
-              className="w-full h-56 object-cover rounded-t-3xl"
+              className="w-full h-56 object-cover rounded-3xl"
               loading="lazy"
             />
             <div className="p-6 flex flex-col justify-between h-56">
               <div>
-                <h3 className="text-2xl font-semibold text-green-800 mb-3 leading-tight">
+                <h3 className="text-2xl font-semibold text-black mb-3 leading-tight">
                   {offer.title}
                 </h3>
                 <p className="text-gray-700 text-base leading-relaxed mb-4 line-clamp-3">
                   {offer.description}
                 </p>
               </div>
-              <p className="text-sm font-semibold text-red-600 tracking-wide">
+              <p className="text-sm font-semibold text-gray-500 tracking-wide">
                 Valid Until: {new Date(offer.validTill).toLocaleDateString()}
               </p>
             </div>

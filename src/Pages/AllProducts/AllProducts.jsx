@@ -61,7 +61,7 @@ const AllProducts = () => {
   const totalPages = Math.ceil((data?.total || 0) / itemsPerPage);
 
   return (
-    <div className="bg-black">
+    <div className="">
       <div className="px-4 py-6 max-w-7xl mx-auto ">
         {/* 📆 Filter + Sort Form */}
         <form

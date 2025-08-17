@@ -3,12 +3,12 @@ import { Link } from "react-router";
 
 const Banner = () => {
   return (
-    <div className="relative w-full absolute h-[80vh] md:h-[90vh] overflow-hidden">
+    <div className="relative w-full absolute h-[80vh] md:h-full mb-10 overflow-hidden">
       {/* Background Image */}
       <img
         src="https://i.ibb.co/gMVrXBjC/supermarket-banner-concept-with-ingredients.jpg" // ✅ চাইলেই নিজের ইমেজ ইউজ করতে পারিস
         alt="Fresh Market"
-        className="w-full  object-cover"
+        className="w-full h-[100vh] object-cover"
       />
 
       {/* Dark Overlay */}
